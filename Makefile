@@ -6,3 +6,6 @@ build:
 
 lint:
 	npm run lint
+
+install:
+	npm ci
