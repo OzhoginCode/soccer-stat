@@ -20,7 +20,9 @@ module.exports = {
     ],
     'react/react-in-jsx-scope': 'off',
     'react/jsx-one-expression-per-line': 'off',
+    'react/prop-types': 'off',
     'import/extensions': 'off',
     'react/function-component-definition': 'off',
+    'jsx-a11y/label-has-associated-control': 'off',
   },
 }

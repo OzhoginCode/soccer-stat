@@ -1,9 +1,9 @@
 import { createBrowserRouter } from 'react-router-dom';
 
 import App from './App';
-import LeagueList from './components/LeagueList.jsx';
+import Leagues from './components/Leagues.jsx';
 import LeagueDetail from './components/LeagueDetail.jsx';
-import TeamList from './components/TeamList.jsx';
+import Teams from './components/Teams.jsx';
 import TeamDetail from './components/TeamDetail.jsx';
 
 const router = createBrowserRouter([
@@ -13,7 +13,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: 'leagues',
-        element: <LeagueList />,
+        element: <Leagues />,
       },
       {
         path: 'leagues/:id',
@@ -21,7 +21,7 @@ const router = createBrowserRouter([
       },
       {
         path: 'teams',
-        element: <TeamList />,
+        element: <Teams />,
       },
       {
         path: 'teams/:id',
