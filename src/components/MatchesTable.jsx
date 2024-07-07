@@ -1,6 +1,6 @@
 import Pagination from './Pagination.jsx';
 
-const MatchesTable = ({ currentPage, setCurrentPage, matches }) => { // eslint-disable-line
+const MatchesTable = ({ currentPage, setCurrentPage, matches }) => {
   const itemsPerPage = 10;
   const totalItems = matches.length;
 

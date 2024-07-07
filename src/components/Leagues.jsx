@@ -5,7 +5,7 @@ import Search from './search.jsx';
 
 import competitions from '../__fixtures__/competitions.js';
 
-const LeagueList = ({ currentPage, setCurrentPage, teams }) => { // eslint-disable-line no-shadow
+const LeagueList = ({ currentPage, setCurrentPage, teams }) => {
   const itemsPerPage = 10;
   const totalItems = teams.length;
 
