@@ -1,0 +1,12 @@
+eslintrc.cjs
+node_modules
+Dockerfile
+docker-compose.yml
+Makefile
+README.md
+dist
+.git
+.gitignore
+.github
+.dockerignore
+.DS_Store
