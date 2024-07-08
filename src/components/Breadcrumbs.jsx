@@ -3,7 +3,7 @@ import { ChevronRightIcon } from '@heroicons/react/20/solid';
 
 const Breadcrumbs = ({ itemName }) => {
   const location = useLocation();
-  const [tab] = location.pathname.split('/').filter((x) => x);
+  const [, tab] = location.pathname.split('/').filter((x) => x);
   const namesTables = {
     teams: 'Команды',
     leagues: 'Лиги',
