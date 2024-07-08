@@ -7,7 +7,7 @@ import Search from './search.jsx';
 
 import paths from '../paths.js';
 
-const TeamList = ({ currentPage, setCurrentPage, teams }) => { // eslint-disable-line no-shadow
+const TeamList = ({ currentPage, setCurrentPage, teams }) => {
   const itemsPerPage = 10;
   const totalItems = teams.length;
 
