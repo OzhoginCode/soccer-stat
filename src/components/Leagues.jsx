@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-import client from '../apiClient.js';
 import Pagination from './Pagination.jsx';
 import Search from './search.jsx';
+import ErrorModal from './ErrorModal.jsx';
 
-import paths from '../paths.js';
+import client from '../tools/apiClient.js';
+import paths from '../tools/paths.js';
 
 const LeagueList = ({ currentPage, setCurrentPage, teams }) => {
   const itemsPerPage = 10;
@@ -23,7 +24,7 @@ const LeagueList = ({ currentPage, setCurrentPage, teams }) => {
           <div className="grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 xl:gap-x-8">
             {currentData.map((team) => (
               <Link key={team.id} to={`${team.id}`} className="group border-2 rounded-lg duration-200 hover:scale-105 hover:border-indigo-500 hover:shadow-lg">
-                <h3 className="mt-12 text-3xl text-gray-900 text-center">{team.name}</h3>
+                <h3 className="mt-12 text-2xl sm:text-3xl text-gray-900 text-center">{team.name}</h3>
                 <div className="mt-14 mb-6 text-lg text-gray-900 text-center">{team.area.name}</div>
               </Link>
             ))}
@@ -44,6 +45,7 @@ const Leagues = () => {
   const [searchText, setSearchText] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [teams, setLeagues] = useState([]);
+  const [modalOpen, setModalOpen] = useState(false);
 
   const currentCompetitions = teams.filter((team) => team.name
     .toLowerCase()
@@ -51,8 +53,12 @@ const Leagues = () => {
 
   useEffect(() => {
     const fetchLeagues = async () => {
-      const resp = await client.get(paths.competitions());
-      setLeagues(resp.data.competitions);
+      try {
+        const resp = await client.get(paths.competitions());
+        setLeagues(resp.data.competitions);
+      } catch (err) {
+        if (err.response.status === 429) setModalOpen(true);
+      }
     };
     fetchLeagues();
   }, []);
@@ -69,6 +75,7 @@ const Leagues = () => {
         setCurrentPage={setCurrentPage}
         teams={currentCompetitions}
       />
+      <ErrorModal isOpen={modalOpen} setIsOpen={setModalOpen} />
     </>
   );
 };
