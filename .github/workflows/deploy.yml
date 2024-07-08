@@ -20,7 +20,7 @@ jobs:
       - name: Build with Docker
         run: |
           docker build -t client:build -f Dockerfile.prod .
-          docker run --rm -v ${{ github.workspace }}:/app client:build cp -r /app/dist /app
+          docker run --rm -v ${{ github.workspace }}:/gh-workspace client:build cp -r /app/dist /gh-workspace/dist
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
