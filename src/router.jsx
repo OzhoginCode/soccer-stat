@@ -8,7 +8,7 @@ import TeamCalendar from './components/TeamCalendar.jsx';
 
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: '/soccer-stat/',
     element: <App />,
     children: [
       {
