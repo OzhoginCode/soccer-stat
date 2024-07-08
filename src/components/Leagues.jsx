@@ -1,9 +1,11 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+
+import client from '../apiClient.js';
 import Pagination from './Pagination.jsx';
 import Search from './search.jsx';
 
-import competitions from '../__fixtures__/competitions.js';
+import paths from '../paths.js';
 
 const LeagueList = ({ currentPage, setCurrentPage, teams }) => {
   const itemsPerPage = 10;
@@ -41,9 +43,19 @@ const LeagueList = ({ currentPage, setCurrentPage, teams }) => {
 const Leagues = () => {
   const [searchText, setSearchText] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
-  const currentCompetitions = competitions.filter((team) => team.name
+  const [teams, setLeagues] = useState([]);
+
+  const currentCompetitions = teams.filter((team) => team.name
     .toLowerCase()
     .includes(searchText.toLowerCase()));
+
+  useEffect(() => {
+    const fetchLeagues = async () => {
+      const resp = await client.get(paths.competitions());
+      setLeagues(resp.data.competitions);
+    };
+    fetchLeagues();
+  }, []);
 
   return (
     <>
