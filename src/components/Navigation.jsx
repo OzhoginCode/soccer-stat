@@ -11,8 +11,8 @@ const classNames = (...classes) => classes.filter(Boolean).join(' ');
 const Navigation = () => {
   const { pathname } = useLocation();
   const navigation = [
-    { name: 'Лиги', href: 'leagues' },
-    { name: 'Команды', href: 'teams' },
+    { name: 'Лиги', href: '/leagues' },
+    { name: 'Команды', href: '/teams' },
   ];
   return (
     <Disclosure as="nav" className="bg-gray-800">
@@ -20,7 +20,7 @@ const Navigation = () => {
         <div className="flex h-16 items-center justify-between">
           <div className="flex items-center">
             <div className="flex-shrink-0">
-              <Link to="./">
+              <Link to="/">
                 <img
                   alt="Главная страница"
                   src={logo}
