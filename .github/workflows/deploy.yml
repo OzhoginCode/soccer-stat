@@ -17,9 +17,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-      - run: make install
-      - run: make build
+      - name: Build with Docker
+        run: |
+          docker build -t client:build -f Dockerfile.prod .
+          docker run --rm -v ${{ github.workspace }}:/app client:build cp -r /app/dist /app
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
