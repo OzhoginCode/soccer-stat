@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-import client from '../apiClient.js';
 import Pagination from './Pagination.jsx';
 import Search from './search.jsx';
+import ErrorModal from './ErrorModal.jsx';
 
-import paths from '../paths.js';
+import client from '../tools/apiClient.js';
+import paths from '../tools/paths.js';
 
 const TeamList = ({ currentPage, setCurrentPage, teams }) => {
   const itemsPerPage = 10;
@@ -50,6 +51,7 @@ const Teams = () => {
   const [searchText, setSearchText] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [teams, setTeams] = useState([]);
+  const [modalOpen, setModalOpen] = useState(false);
 
   const currentTeams = teams.filter((team) => team.name
     .toLowerCase()
@@ -57,8 +59,12 @@ const Teams = () => {
 
   useEffect(() => {
     const fetchTeams = async () => {
-      const resp = await client.get(paths.teams());
-      setTeams(resp.data.teams);
+      try {
+        const resp = await client.get(paths.teams());
+        setTeams(resp.data.teams);
+      } catch (err) {
+        if (err.response.status === 429) setModalOpen(true);
+      }
     };
     fetchTeams();
   }, []);
@@ -75,6 +81,7 @@ const Teams = () => {
         setCurrentPage={setCurrentPage}
         teams={currentTeams}
       />
+      <ErrorModal isOpen={modalOpen} setIsOpen={setModalOpen} />
     </>
   );
 };

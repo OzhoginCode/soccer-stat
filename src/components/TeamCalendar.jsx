@@ -2,11 +2,12 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import Datepicker from 'react-tailwindcss-datepicker';
 
-import client from '../apiClient.js';
 import Breadcrumbs from './Breadcrumbs.jsx';
 import MatchesTable from './MatchesTable.jsx';
+import ErrorModal from './ErrorModal.jsx';
 
-import paths from '../paths.js';
+import client from '../tools/apiClient.js';
+import paths from '../tools/paths.js';
 
 const TeamCalendar = () => {
   const [matches, setMatches] = useState([]);
@@ -18,6 +19,8 @@ const TeamCalendar = () => {
     endDate: null,
   });
 
+  const [modalOpen, setModalOpen] = useState(false);
+
   const { id } = useParams();
 
   useEffect(() => {
@@ -25,19 +28,26 @@ const TeamCalendar = () => {
       dateFrom: dateRange.startDate,
       dateTo: dateRange.endDate,
     };
-
     const fetchMatches = async () => {
-      const resp = await client.get(paths.teamMatches(id), { params });
-      setMatches(resp.data.matches);
-      setCurrentPage(1);
+      try {
+        const resp = await client.get(paths.teamMatches(id), { params });
+        setMatches(resp.data.matches);
+        setCurrentPage(1);
+      } catch (err) {
+        if (err.response.status === 429) setModalOpen(true);
+      }
     };
     fetchMatches();
   }, [id, dateRange]);
 
   useEffect(() => {
     const fetchTeamName = async () => {
-      const resp = await client.get(paths.team(id));
-      setTeamName(resp.data.name);
+      try {
+        const resp = await client.get(paths.team(id));
+        setTeamName(resp.data.name);
+      } catch (err) {
+        if (err.response.status === 429) setModalOpen(true);
+      }
     };
     fetchTeamName();
   }, [id]);
@@ -63,6 +73,7 @@ const TeamCalendar = () => {
         setCurrentPage={setCurrentPage}
         matches={matches}
       />
+      <ErrorModal isOpen={modalOpen} setIsOpen={setModalOpen} />
     </>
   );
 };
