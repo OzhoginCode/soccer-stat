@@ -1,9 +1,11 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+
+import client from '../apiClient.js';
 import Pagination from './Pagination.jsx';
 import Search from './search.jsx';
 
-import teams from '../__fixtures__/teams.js';
+import paths from '../paths.js';
 
 const TeamList = ({ currentPage, setCurrentPage, teams }) => { // eslint-disable-line no-shadow
   const itemsPerPage = 10;
@@ -23,8 +25,8 @@ const TeamList = ({ currentPage, setCurrentPage, teams }) => { // eslint-disable
               <Link key={team.id} to={`${team.id}`} className="group">
                 <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
                   <img
-                    alt={team.imageAlt}
-                    src={team.crest}
+                    alt="Логотип команды"
+                    src={team.crestUrl}
                     className="h-full w-full object-cover object-center group-hover:opacity-75 duration-200 group-hover:scale-105"
                   />
                 </div>
@@ -47,9 +49,19 @@ const TeamList = ({ currentPage, setCurrentPage, teams }) => { // eslint-disable
 const Teams = () => {
   const [searchText, setSearchText] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
+  const [teams, setTeams] = useState([]);
+
   const currentTeams = teams.filter((team) => team.name
     .toLowerCase()
     .includes(searchText.toLowerCase()));
+
+  useEffect(() => {
+    const fetchTeams = async () => {
+      const resp = await client.get(paths.teams());
+      setTeams(resp.data.teams);
+    };
+    fetchTeams();
+  }, []);
 
   return (
     <>

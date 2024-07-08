@@ -32,16 +32,23 @@ const MatchesTable = ({ currentPage, setCurrentPage, matches }) => {
                     POSTPONED: 'Отложен',
                     SUSPENDED: 'Приостановлен',
                     CANCELED: 'Отменен',
-                    TIMED: 'Запланирован(?)',
                   };
                   const status = statusNames[match.status];
 
                   const { fullTime, extraTime, penalties } = match.score;
-                  const formatTime = (time) => (time?.home && time?.away ? `(${time.home}:${time.away})` : '');
-                  const formattedFullTime = formatTime(fullTime);
-                  const formattedExtraTime = formatTime(extraTime);
-                  const formattedPenalties = formatTime(penalties);
-                  const score = [formattedFullTime, formattedExtraTime, formattedPenalties].join('-');
+
+                  const validateScore = (score) => {
+                    const isValid = score?.homeTeam !== null && score?.awayTeam !== null;
+                    return isValid;
+                  };
+                  const formatScore = (score) => `${score.homeTeam}:${score.awayTeam}`;
+                  const formatExtraScore = (score) => `(${formatScore(score)})`;
+
+                  const fullTimeScore = validateScore(fullTime) ? formatScore(fullTime) : null;
+                  const extraTimeScore = validateScore(extraTime)
+                    ? formatExtraScore(extraTime) : null;
+                  const penaltiesScore = validateScore(penalties)
+                    ? formatExtraScore(penalties) : null;
                   return (
                     <tr key={match.id} className="border-b dark:border-neutral-500">
                       <td className="whitespace-nowrap px-6 py-4">{formattedDate}</td>
@@ -49,7 +56,7 @@ const MatchesTable = ({ currentPage, setCurrentPage, matches }) => {
                       <td className="whitespace-nowrap px-6 py-4">{status}</td>
                       <td className="whitespace-nowrap px-6 py-4">{match.homeTeam.name}</td>
                       <td className="whitespace-nowrap px-6 py-4">{match.awayTeam.name}</td>
-                      <td className="whitespace-nowrap px-6 py-4">{score}</td>
+                      <td className="whitespace-nowrap px-6 py-4">{fullTimeScore} <span className="text-gray-400">{extraTimeScore} {penaltiesScore}</span></td>
                     </tr>
                   );
                 })}

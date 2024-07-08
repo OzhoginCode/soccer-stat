@@ -2,9 +2,9 @@ import { createBrowserRouter } from 'react-router-dom';
 
 import App from './App';
 import Leagues from './components/Leagues.jsx';
-import LeagueDetail from './components/LeagueDetail.jsx';
+import LeagueCalendar from './components/LeagueCalendar.jsx';
 import Teams from './components/Teams.jsx';
-import TeamDetail from './components/TeamDetail.jsx';
+import TeamCalendar from './components/TeamCalendar.jsx';
 
 const router = createBrowserRouter([
   {
@@ -17,7 +17,7 @@ const router = createBrowserRouter([
       },
       {
         path: 'leagues/:id',
-        element: <LeagueDetail />,
+        element: <LeagueCalendar />,
       },
       {
         path: 'teams',
@@ -25,7 +25,7 @@ const router = createBrowserRouter([
       },
       {
         path: 'teams/:id',
-        element: <TeamDetail />,
+        element: <TeamCalendar />,
       },
     ],
   },

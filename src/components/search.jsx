@@ -7,7 +7,7 @@ const Search = ({ setSearchText, setCurrentPage }) => (
       onSubmit={(e) => {
         e.preventDefault();
         const { value } = e.target.elements.search;
-        setSearchText(value);
+        setSearchText(value.trim());
         setCurrentPage(1);
       }}
     >
