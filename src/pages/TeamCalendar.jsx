@@ -2,16 +2,16 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import Datepicker from 'react-tailwindcss-datepicker';
 
-import Breadcrumbs from './Breadcrumbs.jsx';
-import MatchesTable from './MatchesTable.jsx';
-import ErrorModal from './ErrorModal.jsx';
+import Breadcrumbs from '../components/Breadcrumbs.jsx';
+import MatchesTable from '../components/MatchesTable.jsx';
+import ErrorModal from '../components/ErrorModal.jsx';
 
 import client from '../tools/apiClient.js';
 import paths from '../tools/paths.js';
 
-const LeagueCalendar = () => {
+const TeamCalendar = () => {
   const [matches, setMatches] = useState([]);
-  const [leagueName, setLeagueName] = useState([]);
+  const [teamName, setTeamName] = useState([]);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [dateRange, setDateRange] = useState({
@@ -28,23 +28,33 @@ const LeagueCalendar = () => {
       dateFrom: dateRange.startDate,
       dateTo: dateRange.endDate,
     };
-
-    const fetchData = async () => {
+    const fetchMatches = async () => {
       try {
-        const { data } = await client.get(paths.competitionMatches(id), { params });
-        setMatches(data.matches);
-        setLeagueName(data.competition.name);
+        const resp = await client.get(paths.teamMatches(id), { params });
+        setMatches(resp.data.matches);
         setCurrentPage(1);
       } catch (err) {
         if (err.response.status === 429) setModalOpen(true);
       }
     };
-    fetchData();
+    fetchMatches();
   }, [id, dateRange]);
+
+  useEffect(() => {
+    const fetchTeamName = async () => {
+      try {
+        const resp = await client.get(paths.team(id));
+        setTeamName(resp.data.name);
+      } catch (err) {
+        if (err.response.status === 429) setModalOpen(true);
+      }
+    };
+    fetchTeamName();
+  }, [id]);
 
   return (
     <>
-      <Breadcrumbs itemName={leagueName} />
+      <Breadcrumbs itemName={teamName} />
       <h2 className="text-5xl mt-3">Матчи</h2>
       <div className="w-72 mt-3">
         <Datepicker
@@ -68,4 +78,4 @@ const LeagueCalendar = () => {
   );
 };
 
-export default LeagueCalendar;
+export default TeamCalendar;

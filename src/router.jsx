@@ -1,10 +1,10 @@
 import { createBrowserRouter } from 'react-router-dom';
 
 import App from './App';
-import Leagues from './components/Leagues.jsx';
-import LeagueCalendar from './components/LeagueCalendar.jsx';
-import Teams from './components/Teams.jsx';
-import TeamCalendar from './components/TeamCalendar.jsx';
+import Leagues from './pages/Leagues.jsx';
+import LeagueCalendar from './pages/LeagueCalendar.jsx';
+import Teams from './pages/Teams.jsx';
+import TeamCalendar from './pages/TeamCalendar.jsx';
 
 const router = createBrowserRouter([
   {
