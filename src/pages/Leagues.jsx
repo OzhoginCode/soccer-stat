@@ -2,17 +2,17 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 import Pagination from '../components/Pagination.jsx';
-import Search from '../components/search.jsx';
+import Search from '../components/Search.jsx';
 import ErrorModal from '../components/ErrorModal.jsx';
 
 import client from '../tools/apiClient.js';
 import paths from '../tools/paths.js';
 
-const LeagueList = ({ currentPage, setCurrentPage, teams }) => {
+const LeagueList = ({ currentPage, setCurrentPage, leagues }) => {
   const itemsPerPage = 10;
-  const totalItems = teams.length;
+  const totalItems = leagues.length;
 
-  const currentData = teams.slice(
+  const currentData = leagues.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage,
   );
@@ -22,10 +22,10 @@ const LeagueList = ({ currentPage, setCurrentPage, teams }) => {
         <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-12 lg:max-w-7xl lg:px-8">
           <h2 className="sr-only">Лиги</h2>
           <div className="grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 xl:gap-x-8">
-            {currentData.map((team) => (
-              <Link key={team.id} to={`${team.id}`} className="group border-2 rounded-lg duration-200 hover:scale-105 hover:border-indigo-500 hover:shadow-lg">
-                <h3 className="mt-12 text-2xl sm:text-3xl text-gray-900 text-center">{team.name}</h3>
-                <div className="mt-14 mb-6 text-lg text-gray-900 text-center">{team.area.name}</div>
+            {currentData.map((league) => (
+              <Link key={league.id} to={`${league.id}`} className="group border-2 rounded-lg duration-200 hover:scale-105 hover:border-indigo-500 hover:shadow-lg">
+                <h3 className="mt-12 text-2xl sm:text-3xl text-gray-900 text-center">{league.name}</h3>
+                <div className="mt-14 mb-6 text-lg text-gray-900 text-center">{league.area.name}</div>
               </Link>
             ))}
           </div>
@@ -44,12 +44,12 @@ const LeagueList = ({ currentPage, setCurrentPage, teams }) => {
 const Leagues = () => {
   const [searchText, setSearchText] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
-  const [teams, setLeagues] = useState([]);
+  const [leagues, setLeagues] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
 
-  const currentCompetitions = teams.filter((team) => team.name
-    .toLowerCase()
-    .includes(searchText.toLowerCase()));
+  const currentLeagues = searchText !== ''
+    ? leagues.filter((league) => league.name === searchText)
+    : leagues;
 
   useEffect(() => {
     const fetchLeagues = async () => {
@@ -73,7 +73,7 @@ const Leagues = () => {
       <LeagueList
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
-        teams={currentCompetitions}
+        leagues={currentLeagues}
       />
       <ErrorModal isOpen={modalOpen} setIsOpen={setModalOpen} />
     </>

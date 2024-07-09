@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 import Pagination from '../components/Pagination.jsx';
-import Search from '../components/search.jsx';
+import Search from '../components/Search.jsx';
 import ErrorModal from '../components/ErrorModal.jsx';
 
 import client from '../tools/apiClient.js';
@@ -53,9 +53,9 @@ const Teams = () => {
   const [teams, setTeams] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
 
-  const currentTeams = teams.filter((team) => team.name
-    .toLowerCase()
-    .includes(searchText.toLowerCase()));
+  const currentTeams = searchText !== ''
+    ? teams.filter((team) => team.name === searchText)
+    : teams;
 
   useEffect(() => {
     const fetchTeams = async () => {

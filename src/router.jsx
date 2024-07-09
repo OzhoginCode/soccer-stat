@@ -1,4 +1,4 @@
-import { createBrowserRouter } from 'react-router-dom';
+import { createBrowserRouter, Navigate } from 'react-router-dom';
 
 import App from './App';
 import Leagues from './pages/Leagues.jsx';
@@ -11,6 +11,10 @@ const router = createBrowserRouter([
     path: '/',
     element: <App />,
     children: [
+      {
+        path: '/',
+        element: <Navigate to="/leagues" />,
+      },
       {
         path: 'leagues',
         element: <Leagues />,
