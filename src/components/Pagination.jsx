@@ -4,34 +4,28 @@ const PageNumbers = ({ currentPage, totalPages, setCurrentPage }) => {
   const inactiveClassNames = 'relative items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 disabled:hover:bg-white';
   const activeClassNames = 'relative z-10 inline-flex items-center bg-indigo-600 px-4 py-2 text-sm font-semibold text-white focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600';
 
+  const range = (from, to) => [...Array(to - from + 1).keys()].map((i) => i + from);
+
   const generatePageNumbers = () => {
     const pages = [];
 
     if (totalPages <= 7) {
-      for (let i = 1; i <= totalPages; i += 1) {
-        pages.push(i);
-      }
+      pages.push(...range(1, totalPages));
       return pages;
     }
     if (currentPage <= 4) {
-      for (let i = 1; i <= 5; i += 1) {
-        pages.push(i);
-      }
+      pages.push(...range(1, 5));
       pages.push('...', totalPages);
       return pages;
     }
     if (currentPage > 4 && currentPage <= totalPages - 4) {
       pages.push(1, '...');
-      for (let i = currentPage - 1; i <= currentPage + 1; i += 1) {
-        pages.push(i);
-      }
+      pages.push(...range(currentPage - 1, currentPage + 1));
       pages.push('...', totalPages);
       return pages;
     }
     pages.push(1, '...');
-    for (let i = totalPages - 4; i <= totalPages; i += 1) {
-      pages.push(i);
-    }
+    pages.push(...range(totalPages - 4, totalPages));
     return pages;
   };
 

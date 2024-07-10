@@ -20,13 +20,11 @@ const Navigation = () => {
         <div className="flex h-16 items-center justify-between">
           <div className="flex items-center">
             <div className="flex-shrink-0">
-              <Link to="/">
-                <img
-                  alt="Главная страница"
-                  src={logo}
-                  className="h-8 w-8 bg-white rounded-full"
-                />
-              </Link>
+              <img
+                alt="Главная страница"
+                src={logo}
+                className="h-8 w-8 bg-white rounded-full"
+              />
             </div>
             <div className="hidden md:block">
               <div className="ml-10 flex items-baseline space-x-4">
