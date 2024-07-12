@@ -4,7 +4,7 @@ const Search = ({ searchText, setSearchText, setCurrentPage }) => (
   <div className="relative mt-2 rounded-md shadow-sm w-64 flex">
     <input
       name="search"
-      type="text"
+      type="search"
       value={searchText}
       onChange={(e) => {
         setSearchText(e.target.value);

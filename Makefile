@@ -10,3 +10,9 @@ lint:
 
 install:
 	npm ci
+
+test:
+	npx vitest --run
+
+test-watch:
+	npx vitest
