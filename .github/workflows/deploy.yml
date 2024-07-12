@@ -10,7 +10,11 @@ permissions:
   id-token: write
 
 jobs:
+  lint-and-test:
+    uses: ./.github/workflows/lint-and-test.yml
+
   deploy:
+    needs: lint-and-test
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
