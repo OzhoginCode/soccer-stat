@@ -1,3 +1,5 @@
+[![lint-and-test](https://github.com/OzhoginCode/soccer-stat/actions/workflows/lint-and-test.yml/badge.svg)](https://github.com/OzhoginCode/soccer-stat/actions/workflows/lint-and-test.yml)
+
 # Soccer Stat
 Приложение для просмотра спортивной статистики «Soccer Stat»
 
