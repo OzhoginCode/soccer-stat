@@ -5,7 +5,8 @@ import { SunIcon } from '@heroicons/react/24/solid';
 import classNames from '../tools/classNames.js';
 
 const ThemeToggle = () => {
-  const [theme, setTheme] = useState('light');
+  const initialTheme = localStorage.getItem('theme') || 'light';
+  const [theme, setTheme] = useState(initialTheme);
 
   useEffect(() => {
     document.documentElement.classList.remove('light', 'dark');
@@ -15,8 +16,10 @@ const ThemeToggle = () => {
   const [enabled, setEnabled] = useState(theme === 'light');
 
   const handleThemeChange = (isEnabled) => {
-    setTheme(isEnabled ? 'light' : 'dark');
+    const newTheme = isEnabled ? 'light' : 'dark';
+    setTheme(newTheme);
     setEnabled(isEnabled);
+    localStorage.setItem('theme', newTheme);
   };
 
   return (

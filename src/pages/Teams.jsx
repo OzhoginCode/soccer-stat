@@ -24,7 +24,7 @@ const TeamList = ({ currentPage, setCurrentPage, teams }) => {
           <div className="grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 xl:gap-x-8">
             {currentData.map((team) => (
               <Link key={team.id} to={`${team.id}`} className="group">
-                <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 dark:bg-slate-700 xl:aspect-h-8 xl:aspect-w-7">
+                <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 dark:bg-slate-700">
                   <img
                     alt="Логотип команды"
                     src={team.crestUrl}
