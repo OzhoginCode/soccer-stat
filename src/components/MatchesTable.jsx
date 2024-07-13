@@ -9,9 +9,9 @@ const MatchesTable = ({ currentPage, setCurrentPage, matches }) => {
     currentPage * itemsPerPage,
   );
   return (
-    <div className="flex flex-col bg-white mt-3">
+    <div className="flex flex-col bg-white dark:bg-slate-800 mt-3 rounded-lg">
       <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
-        <div className="inline-block min-w-full py-2 sm:px-6 lg:px-8">
+        <div className="min-w-full pt-2 pb-0 sm:px-6 lg:px-8">
           <div className="overflow-hidden">
             <table className="min-w-full text-left text-sm font-light">
               <tbody>
