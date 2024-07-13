@@ -11,9 +11,9 @@ const Breadcrumbs = ({ itemName }) => {
   const tabName = namesTables[tab];
 
   return (
-    <nav className="flex items-center space-x-2 text-gray-600">
+    <nav className="flex items-center space-x-2 text-gray-600 dark:text-gray-500">
       <div className="flex items-center space-x-2">
-        <Link to={`/${tab}`} className="hover:text-gray-900">
+        <Link to={`/${tab}`} className="hover:text-gray-900 dark:hover:text-gray-400">
           {tabName}
         </Link>
       </div>

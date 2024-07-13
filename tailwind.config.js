@@ -9,7 +9,18 @@ export default {
   ],
   darkMode: 'class',
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        light: {
+          background: '#ffffff',
+          text: '#000000',
+        },
+        dark: {
+          background: '#000000',
+          text: '#ffffff',
+        },
+      },
+    },
   },
   corePlugins: {
     aspectRatio: false,
