@@ -57,8 +57,7 @@ const Pagination = ({
 }) => {
   const totalPages = Math.ceil(totalItems / itemsPerPage) || 1;
   const togglePrevious = () => {
-    if (currentPage === 1) return;
-    setCurrentPage(currentPage - 1);
+    if (currentPage !== 1) setCurrentPage(currentPage - 1);
   };
 
   const toggleNext = () => {
