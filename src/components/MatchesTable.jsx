@@ -51,13 +51,13 @@ const formatMatchData = (match) => {
   };
 };
 
+const tableData = ['date', 'time', 'status', 'homeTeam', 'awayTeam'];
+
 const MatchTr = ({ match }) => (
   <tr className="border-b dark:border-neutral-500">
-    <td className="whitespace-nowrap px-6 py-4">{match.date}</td>
-    <td className="whitespace-nowrap px-6 py-4">{match.time}</td>
-    <td className="whitespace-nowrap px-6 py-4">{match.status}</td>
-    <td className="whitespace-nowrap px-6 py-4">{match.homeTeam}</td>
-    <td className="whitespace-nowrap px-6 py-4">{match.awayTeam}</td>
+    {
+      tableData.map((tdName) => <td key={tdName} className="whitespace-nowrap px-6 py-4">{match[tdName]}</td>)
+    }
     <td className="whitespace-nowrap px-6 py-4">{match.fullTimeScore} <span className="text-gray-400">{match.extraTimeScore} {match.penaltiesScore}</span></td>
   </tr>
 );
