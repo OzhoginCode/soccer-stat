@@ -7,13 +7,21 @@ import classNames from '../tools/classNames.js';
 const ThemeToggle = () => {
   const initialTheme = localStorage.getItem('theme') || 'light';
   const [theme, setTheme] = useState(initialTheme);
+  const [enabled, setEnabled] = useState(theme === 'light');
 
   useEffect(() => {
     document.documentElement.classList.remove('light', 'dark');
     document.documentElement.classList.add(theme);
   }, [theme]);
 
-  const [enabled, setEnabled] = useState(theme === 'light');
+  useEffect(() => {
+    window.addEventListener('storage', (event) => {
+      if (event.key === 'theme') {
+        setTheme(event.newValue);
+        setEnabled(event.newValue === 'light');
+      }
+    });
+  }, []);
 
   const handleThemeChange = (isEnabled) => {
     const newTheme = isEnabled ? 'light' : 'dark';
