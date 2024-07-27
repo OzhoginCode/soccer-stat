@@ -1,0 +1,43 @@
+.pagination-page-inactive {
+  @apply relative items-center px-4 py-2 text-sm font-semibold text-gray-900 dark:text-gray-100 ring-1 ring-inset ring-gray-300 dark:ring-gray-700 hover:bg-gray-50 dark:hover:bg-gray-900 focus:z-20 focus:outline-offset-0;
+}
+
+.pagination-page-active {
+  @apply relative z-10 inline-flex items-center bg-indigo-600 px-4 py-2 text-sm font-semibold text-white focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600;
+}
+
+.pagination-container {
+  @apply flex items-center justify-between border-t border-gray-200 bg-white dark:bg-slate-800 dark:border-gray-600 px-4 py-3 sm:px-6 rounded-b-lg;
+}
+
+.pagination-controls {
+  @apply flex flex-1 justify-between sm:hidden;
+}
+
+.pagination-button {
+  @apply relative inline-flex items-center rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-slate-800 px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-slate-700 disabled:hover:bg-white dark:disabled:hover:bg-slate-800;
+}
+
+.pagination-info {
+  @apply hidden sm:flex sm:flex-1 sm:items-center sm:justify-between;
+}
+
+.pagination-text {
+  @apply text-sm text-gray-700 dark:text-gray-300 mr-4;
+}
+
+.pagination-nav {
+  @apply isolate inline-flex -space-x-px rounded-md shadow-sm;
+}
+
+.pagination-icon-button-left {
+  @apply relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 dark:ring-gray-700 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 disabled:hover:bg-white dark:hover:bg-slate-700 dark:disabled:hover:bg-slate-800;
+}
+
+.pagination-icon-button-right {
+  @apply relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 dark:ring-gray-700 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 disabled:hover:bg-white dark:hover:bg-slate-700 dark:disabled:hover:bg-slate-800;
+}
+
+.pagination-icon {
+  @apply h-5 w-5;
+}

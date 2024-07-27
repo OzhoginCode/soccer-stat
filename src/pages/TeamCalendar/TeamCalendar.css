@@ -1,0 +1,7 @@
+.team-calendar-header {
+  @apply text-5xl mt-3;
+}
+
+.team-calendar-datepicker-container {
+  @apply w-72 mt-3;
+}

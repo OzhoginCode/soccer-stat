@@ -1,4 +1,6 @@
-import Pagination from './Pagination.jsx';
+import Pagination from '../Pagination/Pagination.jsx';
+
+import './MatchesTable.css';
 
 const formatMatchData = (match) => {
   const date = new Date(match.utcDate);
@@ -54,11 +56,16 @@ const formatMatchData = (match) => {
 const tableData = ['date', 'time', 'status', 'homeTeam', 'awayTeam'];
 
 const MatchTr = ({ match }) => (
-  <tr className="border-b dark:border-neutral-500">
+  <tr className="match-row">
     {
-      tableData.map((tdName) => <td key={tdName} className="whitespace-nowrap px-6 py-4">{match[tdName]}</td>)
+      tableData.map((tdName) => <td key={tdName} className="match-cell">{match[tdName]}</td>)
     }
-    <td className="whitespace-nowrap px-6 py-4">{match.fullTimeScore} <span className="text-gray-400">{match.extraTimeScore} {match.penaltiesScore}</span></td>
+    <td className="match-cell">
+      {match.fullTimeScore}
+      <span className="match-extra-scores">
+        {match.extraTimeScore} {match.penaltiesScore}
+      </span>
+    </td>
   </tr>
 );
 
@@ -70,22 +77,21 @@ const MatchesTable = ({ currentPage, setCurrentPage, matches }) => {
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage,
   );
+
   return (
-    <div className="flex flex-col bg-white dark:bg-slate-800 mt-3 rounded-lg">
-      <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
-        <div className="min-w-full pt-2 pb-0 sm:px-6 lg:px-8">
-          <div className="overflow-x-auto">
-            <table className="min-w-full text-left text-sm font-light">
-              <tbody>
-                {currentData.map((match) => {
-                  const matchData = formatMatchData(match);
-                  return (
-                    <MatchTr match={matchData} key={match.id} />
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
+    <div className="matches-table-container">
+      <div className="matches-table-wrapper">
+        <div className="matches-table-inner-wrapper">
+          <table className="matches-table">
+            <tbody>
+              {currentData.map((match) => {
+                const matchData = formatMatchData(match);
+                return (
+                  <MatchTr match={matchData} key={match.id} />
+                );
+              })}
+            </tbody>
+          </table>
         </div>
       </div>
       <Pagination

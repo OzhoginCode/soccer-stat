@@ -1,12 +1,14 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-import Pagination from '../components/Pagination.jsx';
-import Search from '../components/Search.jsx';
-import ErrorModal from '../components/ErrorModal.jsx';
+import Pagination from '../../components/Pagination/Pagination.jsx';
+import Search from '../../components/Search/Search.jsx';
+import ErrorModal from '../../components/ErrorModal/ErrorModal.jsx';
 
-import client from '../tools/apiClient.js';
-import paths from '../tools/paths.js';
+import client from '../../tools/apiClient.js';
+import paths from '../../tools/paths.js';
+
+import './Teams.css';
 
 const TeamList = ({ currentPage, setCurrentPage, teams }) => {
   const itemsPerPage = 10;
@@ -18,20 +20,20 @@ const TeamList = ({ currentPage, setCurrentPage, teams }) => {
   );
   return (
     <>
-      <div className="bg-white dark:bg-slate-800 mt-4 rounded-t-lg">
-        <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-12 lg:max-w-7xl lg:px-8">
+      <div className="team-list-container">
+        <div className="team-list-content">
           <h2 className="sr-only">Команды</h2>
-          <div className="grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 xl:gap-x-8">
+          <div className="team-list-grid">
             {currentData.map((team) => (
               <Link key={team.id} to={`${team.id}`} className="group">
-                <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 dark:bg-slate-700">
+                <div className="team-list-item-img-container">
                   <img
                     alt="Логотип команды"
                     src={team.crestUrl}
-                    className="mx-auto my-auto h-4/6 w-4/6 object-cover object-center group-hover:opacity-75 duration-200 group-hover:scale-105"
+                    className="team-list-item-img"
                   />
                 </div>
-                <h3 className="mt-4 text-lg text-gray-900 dark:text-gray-200 text-center">{team.name}</h3>
+                <h3 className="team-list-item-title">{team.name}</h3>
               </Link>
             ))}
           </div>

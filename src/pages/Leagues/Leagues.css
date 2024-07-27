@@ -1,0 +1,23 @@
+.league-list-container {
+  @apply bg-white dark:bg-slate-800 mt-4 rounded-t-lg;
+}
+
+.league-list-content {
+  @apply mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-12 lg:max-w-7xl lg:px-8;
+}
+
+.league-list-grid {
+  @apply grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 xl:gap-x-8;
+}
+
+.league-list-item {
+  @apply h-44 flex flex-col border-2 rounded-lg dark:border-gray-600 duration-200 hover:scale-105 hover:border-indigo-500 hover:shadow-lg dark:hover:border-indigo-500;
+}
+
+.league-list-item-title {
+  @apply mt-12 text-2xl sm:text-3xl text-gray-900 dark:text-gray-200 text-center;
+}
+
+.league-list-item-area {
+  @apply mt-auto mb-6 text-lg text-gray-900 dark:text-gray-200 text-center;
+}

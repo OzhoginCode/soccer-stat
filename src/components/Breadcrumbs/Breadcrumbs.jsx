@@ -1,6 +1,8 @@
 import { Link, useLocation } from 'react-router-dom';
 import { ChevronRightIcon } from '@heroicons/react/20/solid';
 
+import './Breadcrumbs.css';
+
 const Breadcrumbs = ({ itemName }) => {
   const location = useLocation();
   const [tab] = location.pathname.split('/').filter((x) => x);
@@ -11,14 +13,14 @@ const Breadcrumbs = ({ itemName }) => {
   const tabName = namesTables[tab];
 
   return (
-    <nav className="flex items-center space-x-2 text-gray-600 dark:text-gray-500">
-      <div className="flex items-center space-x-2">
-        <Link to={`/${tab}`} className="hover:text-gray-900 dark:hover:text-gray-400">
+    <nav className="breadcrumbs-nav">
+      <div className="breadcrumbs-item">
+        <Link to={`/${tab}`} className="breadcrumbs-link">
           {tabName}
         </Link>
       </div>
-      <div className="flex items-center space-x-2 cursor-default">
-        <ChevronRightIcon className="h-5 w-5 text-gray-400" />
+      <ChevronRightIcon className="breadcrumbs-separator" />
+      <div className="breadcrumbs-item-last">
         <span>{itemName}</span>
       </div>
     </nav>

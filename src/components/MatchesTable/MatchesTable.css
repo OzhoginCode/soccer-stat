@@ -1,0 +1,27 @@
+.matches-table-container {
+  @apply flex flex-col bg-white dark:bg-slate-800 mt-3 rounded-lg;
+}
+
+.matches-table-wrapper {
+  @apply overflow-x-auto sm:-mx-6 lg:-mx-8 min-w-full pt-2 pb-0 sm:px-6 lg:px-8;
+}
+
+.matches-table-inner-wrapper {
+  @apply overflow-x-auto;
+}
+
+.matches-table {
+  @apply min-w-full text-left text-sm font-light;
+}
+
+.match-row {
+  @apply border-b dark:border-neutral-500;
+}
+
+.match-cell {
+  @apply whitespace-nowrap px-6 py-4;
+}
+
+.match-extra-scores {
+  @apply text-gray-400;
+}

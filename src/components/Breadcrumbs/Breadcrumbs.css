@@ -1,0 +1,19 @@
+.breadcrumbs-nav {
+  @apply flex items-center space-x-2 text-gray-600 dark:text-gray-500;
+}
+
+.breadcrumbs-item {
+  @apply flex items-center space-x-2;
+}
+
+.breadcrumbs-item-last {
+  @apply flex items-center space-x-2 cursor-default;
+}
+
+.breadcrumbs-separator {
+  @apply h-5 w-5 text-gray-400;
+}
+
+.breadcrumbs-link {
+  @apply hover:text-gray-900 dark:hover:text-gray-400;
+}

@@ -1,0 +1,7 @@
+.league-calendar-header {
+  @apply text-5xl mt-3;
+}
+
+.league-calendar-datepicker-container {
+  @apply w-72 mt-3;
+}

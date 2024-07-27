@@ -2,12 +2,14 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import Datepicker from 'react-tailwindcss-datepicker';
 
-import Breadcrumbs from '../components/Breadcrumbs.jsx';
-import MatchesTable from '../components/MatchesTable.jsx';
-import ErrorModal from '../components/ErrorModal.jsx';
+import Breadcrumbs from '../../components/Breadcrumbs/Breadcrumbs.jsx';
+import MatchesTable from '../../components/MatchesTable/MatchesTable.jsx';
+import ErrorModal from '../../components/ErrorModal/ErrorModal.jsx';
 
-import client from '../tools/apiClient.js';
-import paths from '../tools/paths.js';
+import client from '../../tools/apiClient.js';
+import paths from '../../tools/paths.js';
+
+import './TeamCalendar.css';
 
 const TeamCalendar = () => {
   const [matches, setMatches] = useState([]);
@@ -55,8 +57,8 @@ const TeamCalendar = () => {
   return (
     <>
       <Breadcrumbs itemName={teamName} />
-      <h2 className="text-5xl mt-3">Матчи</h2>
-      <div className="w-72 mt-3">
+      <h2 className="team-calendar-header">Матчи</h2>
+      <div className="team-calendar-datepicker-container">
         <Datepicker
           value={dateRange}
           onChange={setDateRange}
