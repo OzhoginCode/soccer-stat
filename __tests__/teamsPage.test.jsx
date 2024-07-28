@@ -9,7 +9,7 @@ import {
 
 import server from './src/server.js';
 
-import Teams from '../src/pages/Teams.jsx';
+import Teams from '../src/pages/Teams/Teams.jsx';
 
 beforeAll(() => server.listen());
 afterEach(() => server.resetHandlers());

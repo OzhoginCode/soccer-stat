@@ -9,7 +9,7 @@ import {
 
 import server from './src/server.js';
 
-import LeagueCalendar from '../src/pages/LeagueCalendar.jsx';
+import LeagueCalendar from '../src/pages/LeagueCalendar/LeagueCalendar.jsx';
 
 beforeAll(() => server.listen());
 afterEach(() => server.resetHandlers());

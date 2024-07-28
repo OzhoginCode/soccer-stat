@@ -9,7 +9,7 @@ import {
 
 import server from './src/server.js';
 
-import TeamCalendar from '../src/pages/TeamCalendar.jsx';
+import TeamCalendar from '../src/pages/TeamCalendar/TeamCalendar.jsx';
 
 beforeAll(() => server.listen());
 afterEach(() => server.resetHandlers());

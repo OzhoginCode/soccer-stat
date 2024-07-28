@@ -9,7 +9,7 @@ import {
 
 import server from './src/server.js';
 
-import Leagues from '../src/pages/Leagues.jsx';
+import Leagues from '../src/pages/Leagues/Leagues.jsx';
 
 beforeAll(() => server.listen());
 afterEach(() => server.resetHandlers());
