@@ -1,12 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import Pagination from '../../components/Pagination/Pagination.jsx';
 import Search from '../../components/Search/Search.jsx';
 import ErrorModal from '../../components/ErrorModal/ErrorModal.jsx';
 
-import client from '../../tools/apiClient.js';
-import paths from '../../tools/paths.js';
+import { useGetTeams } from '../../tools/queries.js';
 
 import './Teams.css';
 
@@ -52,24 +51,21 @@ const TeamList = ({ currentPage, setCurrentPage, teams }) => {
 const Teams = () => {
   const [searchText, setSearchText] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
-  const [teams, setTeams] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
+
+  const { isPending, error, data: teams } = useGetTeams();
+
+  if (isPending) {
+    return <span>Loading...</span>;
+  }
+
+  if (error) {
+    return <span>Error: {error.message}</span>;
+  }
 
   const currentTeams = searchText !== ''
     ? teams.filter((team) => team.name === searchText)
     : teams;
-
-  useEffect(() => {
-    const fetchTeams = async () => {
-      try {
-        const resp = await client.get(paths.teams());
-        setTeams(resp.data.teams);
-      } catch (err) {
-        if (err.response.status === 429) setModalOpen(true);
-      }
-    };
-    fetchTeams();
-  }, []);
 
   return (
     <>

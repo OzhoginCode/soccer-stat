@@ -1,12 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import Pagination from '../../components/Pagination/Pagination.jsx';
 import Search from '../../components/Search/Search.jsx';
 import ErrorModal from '../../components/ErrorModal/ErrorModal.jsx';
 
-import client from '../../tools/apiClient.js';
-import paths from '../../tools/paths.js';
+import { useGetCompetitions } from '../../tools/queries.js';
 
 import './Leagues.css';
 
@@ -46,24 +45,21 @@ const LeagueList = ({ currentPage, setCurrentPage, leagues }) => {
 const Leagues = () => {
   const [searchText, setSearchText] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
-  const [leagues, setLeagues] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
+
+  const { isPending, error, data: leagues } = useGetCompetitions();
+
+  if (isPending) {
+    return <span>Loading...</span>;
+  }
+
+  if (error) {
+    return <span>Error: {error.message}</span>;
+  }
 
   const currentLeagues = searchText !== ''
     ? leagues.filter((league) => league.name === searchText)
     : leagues;
-
-  useEffect(() => {
-    const fetchLeagues = async () => {
-      try {
-        const resp = await client.get(paths.competitions());
-        setLeagues(resp.data.competitions);
-      } catch (err) {
-        if (err.response.status === 429) setModalOpen(true);
-      }
-    };
-    fetchLeagues();
-  }, []);
 
   return (
     <>

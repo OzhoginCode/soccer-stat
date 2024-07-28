@@ -4,8 +4,9 @@ import {
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
 import {
-  render, screen, fireEvent, within,
+  render, screen, fireEvent, within, waitFor,
 } from '@testing-library/react';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import server from './src/server.js';
 
@@ -17,10 +18,14 @@ afterAll(() => server.close());
 
 test('search', async () => {
   render(
-    <MemoryRouter>
-      <Leagues />
-    </MemoryRouter>,
+    <QueryClientProvider client={new QueryClient()}>
+      <MemoryRouter>
+        <Leagues />
+      </MemoryRouter>
+    </QueryClientProvider>,
   );
+
+  await waitFor(() => screen.getByRole('searchbox'));
 
   const inputElement = screen.getByRole('searchbox');
   fireEvent.change(inputElement, { target: { value: 'лига 15' } });
@@ -32,9 +37,11 @@ test('search', async () => {
 
 test('pagination', async () => {
   render(
-    <MemoryRouter>
-      <Leagues />
-    </MemoryRouter>,
+    <QueryClientProvider client={new QueryClient()}>
+      <MemoryRouter>
+        <Leagues />
+      </MemoryRouter>
+    </QueryClientProvider>,
   );
 
   await screen.findByText('лига 1');

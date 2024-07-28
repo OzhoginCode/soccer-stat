@@ -6,6 +6,7 @@ import { Route, Routes, MemoryRouter } from 'react-router-dom';
 import {
   render, screen, fireEvent, within, waitFor,
 } from '@testing-library/react';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import server from './src/server.js';
 
@@ -17,11 +18,13 @@ afterAll(() => server.close());
 
 test('teams table render', async () => {
   render(
-    <MemoryRouter initialEntries={['/team/1']}>
-      <Routes>
-        <Route path="/team/:id" element={<TeamCalendar />} />
-      </Routes>
-    </MemoryRouter>,
+    <QueryClientProvider client={new QueryClient()}>
+      <MemoryRouter initialEntries={['/team/1']}>
+        <Routes>
+          <Route path="/team/:id" element={<TeamCalendar />} />
+        </Routes>
+      </MemoryRouter>
+    </QueryClientProvider>,
   );
 
   const team1 = await screen.findByText('Home Team 1');
@@ -42,22 +45,19 @@ test('teams table render', async () => {
 
 test('date filtering', async () => {
   render(
-    <MemoryRouter initialEntries={['/team/1']}>
-      <Routes>
-        <Route path="/team/:id" element={<TeamCalendar />} />
-      </Routes>
-    </MemoryRouter>,
+    <QueryClientProvider client={new QueryClient()}>
+      <MemoryRouter initialEntries={['/team/1']}>
+        <Routes>
+          <Route path="/team/:id" element={<TeamCalendar />} />
+        </Routes>
+      </MemoryRouter>
+    </QueryClientProvider>,
   );
 
   const dateInput = await screen.findByRole('presentation');
   fireEvent.change(dateInput, { target: { value: '01/01/2025 - 02/01/2025' } });
 
-  await waitFor(
-    () => {
-      const team1 = screen.queryByText('Home Team 1');
-      return team1 === null;
-    },
-  );
+  await waitFor(() => screen.findByRole('presentation'));
 
   const team1 = screen.queryByText('Home Team 1');
   expect(team1).toBeNull();
@@ -69,11 +69,13 @@ test('date filtering', async () => {
 
 test('pagination', async () => {
   render(
-    <MemoryRouter initialEntries={['/team/1']}>
-      <Routes>
-        <Route path="/team/:id" element={<TeamCalendar />} />
-      </Routes>
-    </MemoryRouter>,
+    <QueryClientProvider client={new QueryClient()}>
+      <MemoryRouter initialEntries={['/team/1']}>
+        <Routes>
+          <Route path="/team/:id" element={<TeamCalendar />} />
+        </Routes>
+      </MemoryRouter>
+    </QueryClientProvider>,
   );
 
   await screen.findByText('Home Team 1');

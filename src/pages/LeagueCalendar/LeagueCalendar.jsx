@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Datepicker from 'react-tailwindcss-datepicker';
 
@@ -6,43 +6,32 @@ import Breadcrumbs from '../../components/Breadcrumbs/Breadcrumbs.jsx';
 import MatchesTable from '../../components/MatchesTable/MatchesTable.jsx';
 import ErrorModal from '../../components/ErrorModal/ErrorModal.jsx';
 
-import client from '../../tools/apiClient.js';
-import paths from '../../tools/paths.js';
+import { useGetCompetitionsData } from '../../tools/queries.js';
 
 import './LeagueCalendar.css';
 
 const LeagueCalendar = () => {
-  const [matches, setMatches] = useState([]);
-  const [leagueName, setLeagueName] = useState([]);
-
   const [currentPage, setCurrentPage] = useState(1);
+  const [modalOpen, setModalOpen] = useState(false);
   const [dateRange, setDateRange] = useState({
     startDate: null,
     endDate: null,
   });
 
-  const [modalOpen, setModalOpen] = useState(false);
-
   const { id } = useParams();
 
-  useEffect(() => {
-    const params = {
-      dateFrom: dateRange.startDate,
-      dateTo: dateRange.endDate,
-    };
+  const { isPending, error, data } = useGetCompetitionsData(id, dateRange);
 
-    const fetchData = async () => {
-      try {
-        const { data } = await client.get(paths.competitionMatches(id), { params });
-        setMatches(data.matches);
-        setLeagueName(data.competition.name);
-        setCurrentPage(1);
-      } catch (err) {
-        if (err.response.status === 429) setModalOpen(true);
-      }
-    };
-    fetchData();
-  }, [id, dateRange]);
+  if (isPending) {
+    return <span>Loading...</span>;
+  }
+
+  if (error) {
+    return <span>Error: {error.message}</span>;
+  }
+
+  const { matches, competition } = data;
+  const leagueName = competition.name;
 
   return (
     <>
