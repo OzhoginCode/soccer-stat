@@ -34,6 +34,7 @@ const getCompetitionData = async ({ queryKey }) => {
 export const useGetTeams = () => useQuery({
   queryKey: ['teams'],
   queryFn: getTeams,
+  initialData: [],
 });
 
 export const useGetTeamData = (id, { startDate, endDate }) => useQueries({
@@ -41,10 +42,12 @@ export const useGetTeamData = (id, { startDate, endDate }) => useQueries({
     {
       queryKey: ['teamName', id],
       queryFn: getTeamName,
+      initialData: '',
     },
     {
       queryKey: ['teamMatches', id, startDate, endDate],
       queryFn: getTeamMatches,
+      initialData: [],
     },
   ],
 });
@@ -52,9 +55,11 @@ export const useGetTeamData = (id, { startDate, endDate }) => useQueries({
 export const useGetCompetitions = () => useQuery({
   queryKey: ['competitions'],
   queryFn: getCompetitions,
+  initialData: [],
 });
 
-export const useGetCompetitionsData = (id, { startDate, endDate }) => useQuery({
-  queryKey: ['competitionsData', id, startDate, endDate],
+export const useGetCompetitionData = (id, { startDate, endDate }) => useQuery({
+  queryKey: ['competitionData', id, startDate, endDate],
   queryFn: getCompetitionData,
+  initialData: { matches: [], competition: { name: '' } },
 });

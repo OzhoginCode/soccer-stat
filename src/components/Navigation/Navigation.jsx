@@ -1,4 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
+import { useIsFetching } from '@tanstack/react-query';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import {
   Disclosure, DisclosureButton, DisclosurePanel,
@@ -12,6 +13,8 @@ import './Navigation.css';
 
 const Navigation = () => {
   const { pathname } = useLocation();
+  const isFetching = useIsFetching();
+
   const navigation = [
     { name: 'Лиги', href: '/leagues' },
     { name: 'Команды', href: '/teams' },
@@ -26,7 +29,10 @@ const Navigation = () => {
                 <img
                   alt="Главная страница"
                   src={logo}
-                  className="nav-logo-img"
+                  className={classNames(
+                    'nav-logo-img',
+                    isFetching ? 'spin' : '',
+                  )}
                 />
                 <div className="nav-links">
                   <div className="nav-links-inner">

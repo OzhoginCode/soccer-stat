@@ -6,13 +6,13 @@ import Breadcrumbs from '../../components/Breadcrumbs/Breadcrumbs.jsx';
 import MatchesTable from '../../components/MatchesTable/MatchesTable.jsx';
 import ErrorModal from '../../components/ErrorModal/ErrorModal.jsx';
 
+import useErrorHandling from '../../hooks/useErrorHandling.js';
 import { useGetTeamData } from '../../tools/queries.js';
 
 import './TeamCalendar.css';
 
 const TeamCalendar = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [modalOpen, setModalOpen] = useState(false);
   const [dateRange, setDateRange] = useState({
     startDate: null,
     endDate: null,
@@ -22,16 +22,12 @@ const TeamCalendar = () => {
 
   const dataQueries = useGetTeamData(id, dateRange);
 
-  const isPending = dataQueries.some((query) => query.isLoading);
+  const fetchStatus = dataQueries.some((query) => query.isFetching) ? 'fetching' : 'idle';
   const error = dataQueries.find((query) => query.error) || null;
 
-  if (isPending) {
-    return <span>Loading...</span>;
-  }
-
-  if (error) {
-    return <span>Error: {error.message}</span>;
-  }
+  const {
+    modalOpen, setModalOpen, reloadTime, reload, errorType,
+  } = useErrorHandling(error, fetchStatus);
 
   const [teamNameQuery, teamMatchesQuery] = dataQueries;
   const { data: teamName } = teamNameQuery;
@@ -58,7 +54,13 @@ const TeamCalendar = () => {
         setCurrentPage={setCurrentPage}
         matches={matches}
       />
-      <ErrorModal isOpen={modalOpen} setIsOpen={setModalOpen} />
+      <ErrorModal
+        isOpen={modalOpen}
+        setIsOpen={setModalOpen}
+        initialReloadTime={reloadTime}
+        reload={reload}
+        errorType={errorType}
+      />
     </>
   );
 };

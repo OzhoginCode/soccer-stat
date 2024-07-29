@@ -7,7 +7,13 @@ import './index.css';
 
 import router from './router.jsx';
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: false,
+    },
+  },
+});
 
 const mountNode = document.getElementById('root');
 const root = ReactDOM.createRoot(mountNode);

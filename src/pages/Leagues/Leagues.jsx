@@ -5,6 +5,7 @@ import Pagination from '../../components/Pagination/Pagination.jsx';
 import Search from '../../components/Search/Search.jsx';
 import ErrorModal from '../../components/ErrorModal/ErrorModal.jsx';
 
+import useErrorHandling from '../../hooks/useErrorHandling.js';
 import { useGetCompetitions } from '../../tools/queries.js';
 
 import './Leagues.css';
@@ -45,17 +46,14 @@ const LeagueList = ({ currentPage, setCurrentPage, leagues }) => {
 const Leagues = () => {
   const [searchText, setSearchText] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
-  const [modalOpen, setModalOpen] = useState(false);
 
-  const { isPending, error, data: leagues } = useGetCompetitions();
+  const {
+    error, data: leagues, fetchStatus,
+  } = useGetCompetitions();
 
-  if (isPending) {
-    return <span>Loading...</span>;
-  }
-
-  if (error) {
-    return <span>Error: {error.message}</span>;
-  }
+  const {
+    modalOpen, setModalOpen, reloadTime, reload, errorType,
+  } = useErrorHandling(error, fetchStatus);
 
   const currentLeagues = searchText !== ''
     ? leagues.filter((league) => league.name === searchText)
@@ -73,7 +71,13 @@ const Leagues = () => {
         setCurrentPage={setCurrentPage}
         leagues={currentLeagues}
       />
-      <ErrorModal isOpen={modalOpen} setIsOpen={setModalOpen} />
+      <ErrorModal
+        isOpen={modalOpen}
+        setIsOpen={setModalOpen}
+        initialReloadTime={reloadTime}
+        reload={reload}
+        errorType={errorType}
+      />
     </>
   );
 };

@@ -5,6 +5,7 @@ import Pagination from '../../components/Pagination/Pagination.jsx';
 import Search from '../../components/Search/Search.jsx';
 import ErrorModal from '../../components/ErrorModal/ErrorModal.jsx';
 
+import useErrorHandling from '../../hooks/useErrorHandling.js';
 import { useGetTeams } from '../../tools/queries.js';
 
 import './Teams.css';
@@ -51,17 +52,11 @@ const TeamList = ({ currentPage, setCurrentPage, teams }) => {
 const Teams = () => {
   const [searchText, setSearchText] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
-  const [modalOpen, setModalOpen] = useState(false);
+  const { error, data: teams, fetchStatus } = useGetTeams();
 
-  const { isPending, error, data: teams } = useGetTeams();
-
-  if (isPending) {
-    return <span>Loading...</span>;
-  }
-
-  if (error) {
-    return <span>Error: {error.message}</span>;
-  }
+  const {
+    modalOpen, setModalOpen, reloadTime, reload, errorType,
+  } = useErrorHandling(error, fetchStatus);
 
   const currentTeams = searchText !== ''
     ? teams.filter((team) => team.name === searchText)
@@ -79,7 +74,13 @@ const Teams = () => {
         setCurrentPage={setCurrentPage}
         teams={currentTeams}
       />
-      <ErrorModal isOpen={modalOpen} setIsOpen={setModalOpen} />
+      <ErrorModal
+        isOpen={modalOpen}
+        setIsOpen={setModalOpen}
+        initialReloadTime={reloadTime}
+        reload={reload}
+        errorType={errorType}
+      />
     </>
   );
 };

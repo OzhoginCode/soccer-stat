@@ -6,29 +6,24 @@ import Breadcrumbs from '../../components/Breadcrumbs/Breadcrumbs.jsx';
 import MatchesTable from '../../components/MatchesTable/MatchesTable.jsx';
 import ErrorModal from '../../components/ErrorModal/ErrorModal.jsx';
 
-import { useGetCompetitionsData } from '../../tools/queries.js';
+import useErrorHandling from '../../hooks/useErrorHandling.js';
+import { useGetCompetitionData } from '../../tools/queries.js';
 
 import './LeagueCalendar.css';
 
 const LeagueCalendar = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [modalOpen, setModalOpen] = useState(false);
   const [dateRange, setDateRange] = useState({
     startDate: null,
     endDate: null,
   });
 
   const { id } = useParams();
+  const { error, data, fetchStatus } = useGetCompetitionData(id, dateRange);
 
-  const { isPending, error, data } = useGetCompetitionsData(id, dateRange);
-
-  if (isPending) {
-    return <span>Loading...</span>;
-  }
-
-  if (error) {
-    return <span>Error: {error.message}</span>;
-  }
+  const {
+    modalOpen, setModalOpen, reloadTime, reload, errorType,
+  } = useErrorHandling(error, fetchStatus);
 
   const { matches, competition } = data;
   const leagueName = competition.name;
@@ -54,7 +49,13 @@ const LeagueCalendar = () => {
         setCurrentPage={setCurrentPage}
         matches={matches}
       />
-      <ErrorModal isOpen={modalOpen} setIsOpen={setModalOpen} />
+      <ErrorModal
+        isOpen={modalOpen}
+        setIsOpen={setModalOpen}
+        initialReloadTime={reloadTime}
+        reload={reload}
+        errorType={errorType}
+      />
     </>
   );
 };
