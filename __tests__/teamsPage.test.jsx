@@ -4,12 +4,13 @@ import {
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
 import {
-  render, screen, fireEvent, within,
+  render, screen, fireEvent, within, waitFor,
 } from '@testing-library/react';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import server from './src/server.js';
 
-import Teams from '../src/pages/Teams.jsx';
+import Teams from '../src/pages/Teams/Teams.jsx';
 
 beforeAll(() => server.listen());
 afterEach(() => server.resetHandlers());
@@ -17,10 +18,14 @@ afterAll(() => server.close());
 
 test('search', async () => {
   render(
-    <MemoryRouter>
-      <Teams />
-    </MemoryRouter>,
+    <QueryClientProvider client={new QueryClient()}>
+      <MemoryRouter>
+        <Teams />
+      </MemoryRouter>
+    </QueryClientProvider>,
   );
+
+  await waitFor(() => screen.getByRole('searchbox'));
 
   const inputElement = screen.getByRole('searchbox');
   fireEvent.change(inputElement, { target: { value: 'команда 15' } });
@@ -32,10 +37,14 @@ test('search', async () => {
 
 test('pagination', async () => {
   render(
-    <MemoryRouter>
-      <Teams />
-    </MemoryRouter>,
+    <QueryClientProvider client={new QueryClient()}>
+      <MemoryRouter>
+        <Teams />
+      </MemoryRouter>
+    </QueryClientProvider>,
   );
+
+  await waitFor(() => screen.getByText('команда 1'));
 
   await screen.findByText('команда 1');
   await screen.findByText('команда 10');

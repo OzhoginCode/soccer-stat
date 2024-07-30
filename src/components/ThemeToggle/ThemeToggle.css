@@ -1,0 +1,43 @@
+.theme-switch {
+  @apply relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out mr-4 md:mr-0;
+}
+
+.theme-switch.enabled {
+  @apply bg-yellow-600;
+}
+
+.theme-switch.disabled {
+  @apply bg-gray-400;
+}
+
+.theme-switch-thumb {
+  @apply pointer-events-none relative inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out;
+}
+
+.thumb-enabled {
+  @apply translate-x-5;
+}
+
+.thumb-disabled {
+  @apply translate-x-0;
+}
+
+.theme-icon {
+  @apply absolute inset-0 flex h-full w-full items-center justify-center transition-opacity;
+}
+
+.icon-disabled {
+  @apply opacity-0 duration-100 ease-out;
+}
+
+.icon-enabled {
+  @apply opacity-100 duration-200 ease-in;
+}
+
+.icon {
+  @apply h-3 w-3 text-gray-400;
+}
+
+.icon.enabled {
+  @apply text-yellow-600;
+}

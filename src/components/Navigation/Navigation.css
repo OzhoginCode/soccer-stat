@@ -1,0 +1,67 @@
+.nav-container {
+  @apply bg-indigo-600 dark:bg-slate-800 fixed w-full z-50 -mt-16;
+}
+
+.nav-content {
+  @apply mx-auto max-w-7xl px-4 sm:px-6 lg:px-8;
+}
+
+.nav-inner-content {
+  @apply flex h-16 items-center justify-between;
+}
+
+.nav-logo {
+  @apply flex items-center;
+}
+
+.nav-logo-img {
+  @apply h-8 w-8 bg-white rounded-full;
+}
+
+.nav-links {
+  @apply hidden md:block;
+}
+
+.nav-links-inner {
+  @apply ml-10 flex items-baseline space-x-4;
+}
+
+.nav-link-inactive {
+  @apply text-white bg-indigo-600 hover:bg-gray-300 hover:text-gray-900 dark:bg-slate-800 dark:hover:bg-slate-700 dark:hover:text-white;
+}
+
+.nav-link-active {
+  @apply bg-white text-black dark:bg-indigo-600 dark:text-white;
+}
+
+.nav-link-base {
+  @apply block rounded-md px-3 py-2 text-base font-medium;
+}
+
+.nav-icons {
+  @apply flex items-center;
+}
+
+.nav-mobile-menu {
+  @apply -mr-2 flex md:hidden;
+}
+
+.nav-mobile-menu-button {
+  @apply relative inline-flex items-center justify-center rounded-md bg-indigo-600 dark:bg-indigo-600 p-2 text-gray-400 dark:text-white hover:bg-indigo-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800;
+}
+
+.nav-mobile-menu-icon {
+  @apply h-6 w-6;
+}
+
+.nav-mobile-panel {
+  @apply md:hidden;
+}
+
+.nav-mobile-panel-links {
+  @apply space-y-1 px-2 pb-3 pt-2 sm:px-3;
+}
+
+.spin {
+  @apply animate-bounce;
+}
