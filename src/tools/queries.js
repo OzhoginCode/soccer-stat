@@ -37,20 +37,30 @@ export const useGetTeams = () => useQuery({
   initialData: [],
 });
 
-export const useGetTeamData = (id, { startDate, endDate }) => useQueries({
-  queries: [
-    {
-      queryKey: ['teamName', id],
-      queryFn: getTeamName,
-      initialData: '',
-    },
-    {
-      queryKey: ['teamMatches', id, startDate, endDate],
-      queryFn: getTeamMatches,
-      initialData: [],
-    },
-  ],
-});
+export const useGetTeamData = (id, { startDate, endDate }) => {
+  const queries = useQueries({
+    queries: [
+      {
+        queryKey: ['teamName', id],
+        queryFn: getTeamName,
+        initialData: '',
+      },
+      {
+        queryKey: ['teamMatches', id, startDate, endDate],
+        queryFn: getTeamMatches,
+        initialData: [],
+      },
+    ],
+  });
+
+  const fetchStatus = queries.some((query) => query.isFetching) ? 'fetching' : 'idle';
+  const error = queries.find((query) => query.error) || null;
+
+  const [teamNameQuery, teamMatchesQuery] = queries;
+  const data = { teamName: teamNameQuery.data, matches: teamMatchesQuery.data };
+
+  return { fetchStatus, error, data };
+};
 
 export const useGetCompetitions = () => useQuery({
   queryKey: ['competitions'],

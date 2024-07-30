@@ -20,18 +20,11 @@ const TeamCalendar = () => {
 
   const { id } = useParams();
 
-  const dataQueries = useGetTeamData(id, dateRange);
-
-  const fetchStatus = dataQueries.some((query) => query.isFetching) ? 'fetching' : 'idle';
-  const error = dataQueries.find((query) => query.error) || null;
+  const { error, data: { teamName, matches }, fetchStatus } = useGetTeamData(id, dateRange);
 
   const {
     modalOpen, setModalOpen, reloadTime, reload, errorType,
   } = useErrorHandling(error, fetchStatus);
-
-  const [teamNameQuery, teamMatchesQuery] = dataQueries;
-  const { data: teamName } = teamNameQuery;
-  const { data: matches } = teamMatchesQuery;
 
   return (
     <>
