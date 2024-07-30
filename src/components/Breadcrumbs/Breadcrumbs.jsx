@@ -19,7 +19,9 @@ const Breadcrumbs = ({ itemName }) => {
           {tabName}
         </Link>
       </div>
+
       <ChevronRightIcon className="breadcrumbs-separator" />
+
       <div className="breadcrumbs-item-last">
         <span>{itemName}</span>
       </div>

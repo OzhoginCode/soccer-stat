@@ -18,6 +18,7 @@ const LeagueList = ({ currentPage, setCurrentPage, leagues }) => {
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage,
   );
+
   return (
     <>
       <div className="league-list-container">
@@ -33,6 +34,7 @@ const LeagueList = ({ currentPage, setCurrentPage, leagues }) => {
           </div>
         </div>
       </div>
+
       <Pagination
         currentPage={currentPage}
         itemsPerPage={itemsPerPage}
@@ -55,9 +57,9 @@ const Leagues = () => {
     modalOpen, setModalOpen, reloadTime, reload, errorType,
   } = useErrorHandling(error, fetchStatus);
 
-  const currentLeagues = searchText !== ''
-    ? leagues.filter((league) => league.name === searchText)
-    : leagues;
+  const currentLeagues = leagues.filter((team) => team.name
+    .toLowerCase()
+    .includes(searchText.toLowerCase()));
 
   return (
     <>

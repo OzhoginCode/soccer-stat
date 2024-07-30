@@ -49,11 +49,13 @@ const TeamCalendar = () => {
           primaryColor="indigo"
         />
       </div>
+
       <MatchesTable
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
         matches={matches}
       />
+
       <ErrorModal
         isOpen={modalOpen}
         setIsOpen={setModalOpen}

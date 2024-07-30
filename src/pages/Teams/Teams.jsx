@@ -18,6 +18,7 @@ const TeamList = ({ currentPage, setCurrentPage, teams }) => {
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage,
   );
+
   return (
     <>
       <div className="team-list-container">
@@ -25,7 +26,7 @@ const TeamList = ({ currentPage, setCurrentPage, teams }) => {
           <h2 className="sr-only">Команды</h2>
           <div className="team-list-grid">
             {currentData.map((team) => (
-              <Link key={team.id} to={`${team.id}`} className="group">
+              <Link key={team.id} to={String(team.id)} className="group">
                 <div className="team-list-item-img-container">
                   <img
                     alt="Логотип команды"
@@ -39,6 +40,7 @@ const TeamList = ({ currentPage, setCurrentPage, teams }) => {
           </div>
         </div>
       </div>
+
       <Pagination
         currentPage={currentPage}
         itemsPerPage={itemsPerPage}
@@ -58,9 +60,9 @@ const Teams = () => {
     modalOpen, setModalOpen, reloadTime, reload, errorType,
   } = useErrorHandling(error, fetchStatus);
 
-  const currentTeams = searchText !== ''
-    ? teams.filter((team) => team.name === searchText)
-    : teams;
+  const currentTeams = teams.filter((team) => team.name
+    .toLowerCase()
+    .includes(searchText.toLowerCase()));
 
   return (
     <>
@@ -69,11 +71,13 @@ const Teams = () => {
         setSearchText={setSearchText}
         setCurrentPage={setCurrentPage}
       />
+
       <TeamList
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
         teams={currentTeams}
       />
+
       <ErrorModal
         isOpen={modalOpen}
         setIsOpen={setModalOpen}

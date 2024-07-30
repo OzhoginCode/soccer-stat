@@ -11,21 +11,41 @@ import logo from '../../assets/logo.svg';
 
 import './Navigation.css';
 
+const NavLinks = ({ navigation, close, pathname }) => (
+  <>
+    {navigation.map((item) => (
+      <Link
+        to={item.href}
+        key={item.name}
+        aria-current={pathname === item.href ? 'page' : undefined}
+        onClick={close}
+        className={classNames(
+          pathname === item.href ? 'nav-link-active' : 'nav-link-inactive',
+          'nav-link-base',
+        )}
+      >
+        {item.name}
+      </Link>
+    ))}
+  </>
+);
+
 const Navigation = () => {
-  const { pathname } = useLocation();
   const isFetching = useIsFetching();
+  const { pathname } = useLocation();
 
   const navigation = [
     { name: 'Лиги', href: '/leagues' },
     { name: 'Команды', href: '/teams' },
   ];
+
   return (
     <Disclosure as="nav" className="nav-container">
       {({ close }) => (
         <>
           <div className="nav-content">
             <div className="nav-inner-content">
-              <div className="nav-logo">
+              <div className="nav-left-container">
                 <img
                   alt="Главная страница"
                   src={logo}
@@ -36,27 +56,15 @@ const Navigation = () => {
                 />
                 <div className="nav-links">
                   <div className="nav-links-inner">
-                    {navigation.map((item) => (
-                      <Link
-                        to={item.href}
-                        key={item.name}
-                        aria-current={pathname === item.href ? 'page' : undefined}
-                        className={classNames(
-                          pathname === item.href ? 'nav-link-active' : 'nav-link-inactive',
-                          'nav-link-base',
-                        )}
-                      >
-                        {item.name}
-                      </Link>
-                    ))}
+                    <NavLinks navigation={navigation} close={close} pathname={pathname} />
                   </div>
                 </div>
               </div>
+
               <div className="nav-icons">
                 <ThemeToggle />
                 <div className="nav-mobile-menu">
                   <DisclosureButton className="nav-mobile-menu-button group">
-                    <span className="absolute -inset-0.5" />
                     <span className="sr-only">Open main menu</span>
                     <Bars3Icon aria-hidden="true" className="nav-mobile-menu-icon group-data-[open]:hidden" />
                     <XMarkIcon aria-hidden="true" className="nav-mobile-menu-icon hidden group-data-[open]:block" />
@@ -65,22 +73,10 @@ const Navigation = () => {
               </div>
             </div>
           </div>
+
           <DisclosurePanel className="nav-mobile-panel">
             <div className="nav-mobile-panel-links">
-              {navigation.map((item) => (
-                <Link
-                  to={item.href}
-                  key={item.name}
-                  aria-current={pathname === item.href ? 'page' : undefined}
-                  className={classNames(
-                    pathname === item.href ? 'nav-link-active' : 'nav-link-inactive',
-                    'nav-link-base',
-                  )}
-                  onClick={close}
-                >
-                  {item.name}
-                </Link>
-              ))}
+              <NavLinks navigation={navigation} close={close} pathname={pathname} />
             </div>
           </DisclosurePanel>
         </>

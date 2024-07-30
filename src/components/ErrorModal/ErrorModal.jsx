@@ -9,6 +9,21 @@ import './ErrorModal.css';
 
 const getErrorText = (errorType, reloadTime) => {
   switch (errorType) {
+    case 403:
+      return {
+        header: 'Ошибка доступа',
+        body: `Так как мы используем открытый API, к сожалению,
+          иногда сервер не предоставляет доступ к нужным данным.
+          Попробуйте зайти на другую страничку`,
+        button: 'Вернуться на главную',
+      };
+    case 404:
+      return {
+        header: 'Ошибка загрузки',
+        body: `Запрошенная вами страничка не найдена.
+          Возможно, сервер в данный момент недоступен`,
+        button: 'Перейти на главную',
+      };
     case 429:
       return {
         header: 'Слишком много запросов',
@@ -18,21 +33,27 @@ const getErrorText = (errorType, reloadTime) => {
           и всё заработает!`,
         button: 'Перезагрузить сейчас',
       };
-    case 403:
-      return {
-        header: 'Ошибка доступа',
-        body: `Так как мы используем открытый API, к сожалению,
-          иногда сервер не предоставляет доступ к нужным данным.
-          Попробуйте зайти на другую страничку`,
-        button: 'Вернуться на главную',
-      };
     default:
       return {
         header: 'Ошибка загрузки',
-        body: `Произошла ошибка получения данных с сервера.
-          Попробуйте перезагрузить страницу.`,
-        button: 'Перезагрузить',
+        body: `Произошла неожиданная ошибка.
+          Если ошибка повторится, пожалуйста, сообщите нам`,
+        button: 'Перейти на главную',
       };
+  }
+};
+
+const getButtonHandler = (errorType, handlers) => {
+  const { navigateToRoot, reload } = handlers;
+  switch (errorType) {
+    case 403:
+      return navigateToRoot;
+    case 404:
+      return navigateToRoot;
+    case 429:
+      return reload;
+    default:
+      return navigateToRoot;
   }
 };
 
@@ -41,13 +62,15 @@ const ErrorModal = ({
 }) => {
   const reloadTime = useErrorModalTimer(initialReloadTime, isOpen);
 
-  const close = () => setIsOpen(false);
-
   const navigate = useNavigate();
   const navigateToRoot = () => navigate('/');
 
   const errorText = getErrorText(errorType, reloadTime);
-  const buttonHandler = errorType === 403 ? navigateToRoot : reload;
+
+  const handlers = { navigateToRoot, reload };
+  const buttonHandler = getButtonHandler(errorType, handlers);
+
+  const close = () => setIsOpen(false);
 
   return (
     <Dialog open={isOpen} as="div" className="error-modal" onClose={close}>
@@ -60,9 +83,11 @@ const ErrorModal = ({
             <DialogTitle as="h3" className="error-modal-title">
               {errorText.header}
             </DialogTitle>
+
             <p className="error-modal-text">
               {errorText.body}
             </p>
+
             <div className="error-modal-button-container">
               <Button
                 className="error-modal-button"
