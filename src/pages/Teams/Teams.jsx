@@ -54,11 +54,13 @@ const TeamList = ({ currentPage, setCurrentPage, teams }) => {
 const Teams = () => {
   const [searchText, setSearchText] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
-  const { error, data: teams, fetchStatus } = useGetTeams();
+  const {
+    error, data: teams, fetchStatus, queryKey,
+  } = useGetTeams();
 
   const {
     modalOpen, setModalOpen, reloadTime, reload, errorType,
-  } = useErrorHandling(error, fetchStatus);
+  } = useErrorHandling(error, fetchStatus, queryKey);
 
   const currentTeams = teams.filter((team) => team.name
     .toLowerCase()

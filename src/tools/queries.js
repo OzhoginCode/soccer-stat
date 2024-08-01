@@ -9,13 +9,13 @@ const getTeams = async () => {
 };
 
 const getTeamName = async ({ queryKey }) => {
-  const [, id] = queryKey;
+  const [, , id] = queryKey;
   const { data } = await client.get(paths.team(id));
   return data.name;
 };
 
 const getTeamMatches = async ({ queryKey }) => {
-  const [, id, dateFrom, dateTo] = queryKey;
+  const [, , id, dateFrom, dateTo] = queryKey;
   const { data } = await client.get(paths.teamMatches(id), { params: { dateFrom, dateTo } });
   return data.matches;
 };
@@ -31,22 +31,29 @@ const getCompetitionData = async ({ queryKey }) => {
   return data;
 };
 
-export const useGetTeams = () => useQuery({
-  queryKey: ['teams'],
-  queryFn: getTeams,
-  initialData: [],
-});
+export const useGetTeams = () => {
+  const queryKey = ['teams'];
+
+  const queryResult = useQuery({
+    queryKey,
+    queryFn: getTeams,
+    initialData: [],
+  });
+
+  return { ...queryResult, queryKey };
+};
 
 export const useGetTeamData = (id, { startDate, endDate }) => {
+  const teamDataKey = 'teamData';
   const queries = useQueries({
     queries: [
       {
-        queryKey: ['teamName', id],
+        queryKey: [teamDataKey, 'teamName', id],
         queryFn: getTeamName,
         initialData: '',
       },
       {
-        queryKey: ['teamMatches', id, startDate, endDate],
+        queryKey: [teamDataKey, 'teamMatches', id, startDate, endDate],
         queryFn: getTeamMatches,
         initialData: [],
       },
@@ -54,22 +61,36 @@ export const useGetTeamData = (id, { startDate, endDate }) => {
   });
 
   const fetchStatus = queries.some((query) => query.isFetching) ? 'fetching' : 'idle';
-  const error = queries.find((query) => query.error) || null;
+  const error = queries.find((query) => query.error)?.error || null;
 
   const [teamNameQuery, teamMatchesQuery] = queries;
   const data = { teamName: teamNameQuery.data, matches: teamMatchesQuery.data };
 
-  return { fetchStatus, error, data };
+  return {
+    fetchStatus, error, data, queryKey: [teamDataKey],
+  };
 };
 
-export const useGetCompetitions = () => useQuery({
-  queryKey: ['competitions'],
-  queryFn: getCompetitions,
-  initialData: [],
-});
+export const useGetCompetitions = () => {
+  const queryKey = ['competitions'];
 
-export const useGetCompetitionData = (id, { startDate, endDate }) => useQuery({
-  queryKey: ['competitionData', id, startDate, endDate],
-  queryFn: getCompetitionData,
-  initialData: { matches: [], competition: { name: '' } },
-});
+  const queryResult = useQuery({
+    queryKey,
+    queryFn: getCompetitions,
+    initialData: [],
+  });
+
+  return { ...queryResult, queryKey };
+};
+
+export const useGetCompetitionData = (id, { startDate, endDate }) => {
+  const queryKey = ['competitionData', id, startDate, endDate];
+
+  const queryResult = useQuery({
+    queryKey,
+    queryFn: getCompetitionData,
+    initialData: { matches: [], competition: { name: '' } },
+  });
+
+  return { ...queryResult, queryKey };
+};

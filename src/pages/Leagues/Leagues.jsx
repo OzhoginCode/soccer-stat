@@ -50,12 +50,12 @@ const Leagues = () => {
   const [currentPage, setCurrentPage] = useState(1);
 
   const {
-    error, data: leagues, fetchStatus,
+    error, data: leagues, fetchStatus, queryKey,
   } = useGetCompetitions();
 
   const {
     modalOpen, setModalOpen, reloadTime, reload, errorType,
-  } = useErrorHandling(error, fetchStatus);
+  } = useErrorHandling(error, fetchStatus, queryKey);
 
   const currentLeagues = leagues.filter((team) => team.name
     .toLowerCase()

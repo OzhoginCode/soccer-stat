@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 
-const useErrorHandling = (error, fetchStatus) => {
+const useErrorHandling = (error, fetchStatus, queryKey) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [reloadTime, setReloadTime] = useState(0);
   const [errorType, setErrorType] = useState('');
@@ -9,9 +9,9 @@ const useErrorHandling = (error, fetchStatus) => {
   const queryClient = useQueryClient();
 
   const reload = useCallback(() => {
-    queryClient.invalidateQueries();
+    queryClient.invalidateQueries(queryKey);
     setModalOpen(false);
-  }, [queryClient]);
+  }, [queryClient]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (!error || fetchStatus === 'fetching') return;

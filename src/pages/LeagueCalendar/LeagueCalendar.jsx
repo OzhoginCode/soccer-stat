@@ -19,11 +19,13 @@ const LeagueCalendar = () => {
   });
 
   const { id } = useParams();
-  const { error, data, fetchStatus } = useGetCompetitionData(id, dateRange);
+  const {
+    error, data, fetchStatus, queryKey,
+  } = useGetCompetitionData(id, dateRange);
 
   const {
     modalOpen, setModalOpen, reloadTime, reload, errorType,
-  } = useErrorHandling(error, fetchStatus);
+  } = useErrorHandling(error, fetchStatus, queryKey);
 
   const { matches, competition } = data;
   const leagueName = competition.name;

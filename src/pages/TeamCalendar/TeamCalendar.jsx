@@ -20,11 +20,13 @@ const TeamCalendar = () => {
 
   const { id } = useParams();
 
-  const { error, data: { teamName, matches }, fetchStatus } = useGetTeamData(id, dateRange);
+  const {
+    error, data: { teamName, matches }, fetchStatus, queryKey,
+  } = useGetTeamData(id, dateRange);
 
   const {
     modalOpen, setModalOpen, reloadTime, reload, errorType,
-  } = useErrorHandling(error, fetchStatus);
+  } = useErrorHandling(error, fetchStatus, queryKey);
 
   return (
     <>
