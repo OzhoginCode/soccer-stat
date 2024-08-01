@@ -28,6 +28,8 @@ const LeagueCalendar = () => {
   const { matches, competition } = data;
   const leagueName = competition.name;
 
+  const showSkeleton = fetchStatus === 'fetching';
+
   return (
     <>
       <Breadcrumbs itemName={leagueName} />
@@ -48,6 +50,7 @@ const LeagueCalendar = () => {
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
         matches={matches}
+        showSkeleton={showSkeleton}
       />
       <ErrorModal
         isOpen={modalOpen}
