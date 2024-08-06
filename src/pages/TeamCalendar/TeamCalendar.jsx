@@ -33,6 +33,8 @@ const TeamCalendar = () => {
   const { data: teamName } = teamNameQuery;
   const { data: matches } = teamMatchesQuery;
 
+  const showSkeleton = fetchStatus === 'fetching';
+
   return (
     <>
       <Breadcrumbs itemName={teamName} />
@@ -53,6 +55,7 @@ const TeamCalendar = () => {
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
         matches={matches}
+        showSkeleton={showSkeleton}
       />
       <ErrorModal
         isOpen={modalOpen}

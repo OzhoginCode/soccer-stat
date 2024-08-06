@@ -10,7 +10,23 @@ import { useGetCompetitions } from '../../tools/queries.js';
 
 import './Leagues.css';
 
-const LeagueList = ({ currentPage, setCurrentPage, leagues }) => {
+const LeagueCard = ({ league }) => (
+  <Link to={`${league.id}`} className="league-list-item group">
+    <h3 className="league-list-item-title">{league.name}</h3>
+    <div className="league-list-item-area">{league.area.name}</div>
+  </Link>
+);
+
+const SkeletonLeagueCard = () => (
+  <div className="league-list-item animate-pulse">
+    <div className="league-list-item-title" />
+    <div className="league-list-item-area" />
+  </div>
+);
+
+const LeagueList = ({
+  currentPage, setCurrentPage, leagues, showSkeleton,
+}) => {
   const itemsPerPage = 10;
   const totalItems = leagues.length;
 
@@ -24,12 +40,13 @@ const LeagueList = ({ currentPage, setCurrentPage, leagues }) => {
         <div className="league-list-content">
           <h2 className="sr-only">Лиги</h2>
           <div className="league-list-grid">
-            {currentData.map((league) => (
-              <Link key={league.id} to={`${league.id}`} className="league-list-item group">
-                <h3 className="league-list-item-title">{league.name}</h3>
-                <div className="league-list-item-area">{league.area.name}</div>
-              </Link>
-            ))}
+            {showSkeleton
+              ? Array.from({ length: itemsPerPage }).map((_, index) => (
+                <SkeletonLeagueCard key={index} /> // eslint-disable-line react/no-array-index-key
+              ))
+              : currentData.map((league) => (
+                <LeagueCard league={league} key={league.id} />
+              ))}
           </div>
         </div>
       </div>
@@ -59,6 +76,8 @@ const Leagues = () => {
     ? leagues.filter((league) => league.name === searchText)
     : leagues;
 
+  const showSkeleton = fetchStatus === 'fetching';
+
   return (
     <>
       <Search
@@ -66,11 +85,14 @@ const Leagues = () => {
         setSearchText={setSearchText}
         setCurrentPage={setCurrentPage}
       />
+
       <LeagueList
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
         leagues={currentLeagues}
+        showSkeleton={showSkeleton}
       />
+
       <ErrorModal
         isOpen={modalOpen}
         setIsOpen={setModalOpen}
