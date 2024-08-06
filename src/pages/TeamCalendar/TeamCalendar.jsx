@@ -28,6 +28,8 @@ const TeamCalendar = () => {
     modalOpen, setModalOpen, reloadTime, reload, errorType,
   } = useErrorHandling(error, fetchStatus, queryKey);
 
+  const showSkeleton = fetchStatus === 'fetching';
+
   return (
     <>
       <Breadcrumbs itemName={teamName} />
@@ -49,6 +51,7 @@ const TeamCalendar = () => {
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
         matches={matches}
+        showSkeleton={showSkeleton}
       />
 
       <ErrorModal
