@@ -41,6 +41,7 @@ const TeamList = ({
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage,
   );
+
   return (
     <>
       <div className="team-list-container">
@@ -57,6 +58,7 @@ const TeamList = ({
           </div>
         </div>
       </div>
+
       <Pagination
         currentPage={currentPage}
         itemsPerPage={itemsPerPage}
@@ -70,15 +72,17 @@ const TeamList = ({
 const Teams = () => {
   const [searchText, setSearchText] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
-  const { error, data: teams, fetchStatus } = useGetTeams();
+  const {
+    error, data: teams, fetchStatus, queryKey,
+  } = useGetTeams();
 
   const {
     modalOpen, setModalOpen, reloadTime, reload, errorType,
-  } = useErrorHandling(error, fetchStatus);
+  } = useErrorHandling(error, fetchStatus, queryKey);
 
-  const currentTeams = searchText !== ''
-    ? teams.filter((team) => team.name === searchText)
-    : teams;
+  const currentTeams = teams.filter((team) => team.name
+    .toLowerCase()
+    .includes(searchText.toLowerCase()));
 
   const showSkeleton = fetchStatus === 'fetching';
 
@@ -89,12 +93,14 @@ const Teams = () => {
         setSearchText={setSearchText}
         setCurrentPage={setCurrentPage}
       />
+
       <TeamList
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
         teams={currentTeams}
         showSkeleton={showSkeleton}
       />
+
       <ErrorModal
         isOpen={modalOpen}
         setIsOpen={setModalOpen}

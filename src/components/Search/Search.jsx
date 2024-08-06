@@ -15,6 +15,7 @@ const Search = ({ searchText, setSearchText, setCurrentPage }) => (
       placeholder="Поиск..."
       className="search-input"
     />
+
     <div className="search-icon-container">
       <MagnifyingGlassIcon className="search-icon" />
     </div>

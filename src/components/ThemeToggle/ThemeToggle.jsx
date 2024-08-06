@@ -36,16 +36,15 @@ const ThemeToggle = () => {
       onChange={handleThemeChange}
       className={`theme-switch ${enabled ? 'enabled' : 'disabled'}`}
     >
-      <span className="sr-only">Use setting</span>
-      <span
-        className={`theme-switch-thumb ${enabled ? 'thumb-enabled' : 'thumb-disabled'}`}
-      >
+      <span className="sr-only">Переключение темы сайта</span>
+      <span className={`theme-switch-thumb ${enabled ? 'thumb-enabled' : 'thumb-disabled'}`}>
         <span
           className={`theme-icon ${enabled ? 'icon-disabled' : 'icon-enabled'}`}
           aria-hidden="true"
         >
           <SunIcon className="icon" />
         </span>
+
         <span
           className={`theme-icon ${enabled ? 'icon-enabled' : 'icon-disabled'}`}
           aria-hidden="true"

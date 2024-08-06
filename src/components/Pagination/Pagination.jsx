@@ -3,8 +3,10 @@ import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/20/solid';
 import './Pagination.css';
 
 const PageNumbers = ({ currentPage, totalPages, setCurrentPage }) => {
+  // возвращает числа в указанном диапазоне
   const range = (from, to) => [...Array(to - from + 1).keys()].map((i) => i + from);
 
+  // возвращает номера страниц доступные для перехода пользователю
   const generatePageNumbers = () => {
     const pages = [];
 
@@ -34,6 +36,7 @@ const PageNumbers = ({ currentPage, totalPages, setCurrentPage }) => {
     }
   };
 
+  // возвращает кнопки для перехода на страницы
   return (
     <>
       {generatePageNumbers().map((page, index) => (
@@ -56,13 +59,13 @@ const Pagination = ({
   currentPage, itemsPerPage, setCurrentPage, totalItems,
 }) => {
   const totalPages = Math.ceil(totalItems / itemsPerPage) || 1;
+
   const togglePrevious = () => {
     if (currentPage !== 1) setCurrentPage(currentPage - 1);
   };
 
   const toggleNext = () => {
-    if (currentPage === totalPages) return;
-    setCurrentPage(currentPage + 1);
+    if (currentPage !== totalPages) setCurrentPage(currentPage + 1);
   };
 
   const firstItem = totalItems ? 1 + ((currentPage - 1) * itemsPerPage) : 0;
@@ -81,6 +84,7 @@ const Pagination = ({
         >
           Previous
         </button>
+
         <button
           type="button"
           onClick={toggleNext}
@@ -90,6 +94,7 @@ const Pagination = ({
           Next
         </button>
       </div>
+
       <div className="pagination-info">
         <div>
           <p className="pagination-text">
@@ -97,6 +102,7 @@ const Pagination = ({
             <span className="font-medium">{totalItems}</span> результатов
           </p>
         </div>
+
         <div>
           <nav aria-label="Pagination" className="pagination-nav">
             <button
@@ -108,11 +114,13 @@ const Pagination = ({
               <span className="sr-only">Previous</span>
               <ChevronLeftIcon aria-hidden="true" className="pagination-icon" />
             </button>
+
             <PageNumbers
               currentPage={currentPage}
               totalPages={totalPages}
               setCurrentPage={setCurrentPage}
             />
+
             <button
               type="button"
               onClick={toggleNext}

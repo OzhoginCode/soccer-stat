@@ -34,6 +34,7 @@ const LeagueList = ({
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage,
   );
+
   return (
     <>
       <div className="league-list-container">
@@ -50,6 +51,7 @@ const LeagueList = ({
           </div>
         </div>
       </div>
+
       <Pagination
         currentPage={currentPage}
         itemsPerPage={itemsPerPage}
@@ -65,16 +67,16 @@ const Leagues = () => {
   const [currentPage, setCurrentPage] = useState(1);
 
   const {
-    error, data: leagues, fetchStatus,
+    error, data: leagues, fetchStatus, queryKey,
   } = useGetCompetitions();
 
   const {
     modalOpen, setModalOpen, reloadTime, reload, errorType,
-  } = useErrorHandling(error, fetchStatus);
+  } = useErrorHandling(error, fetchStatus, queryKey);
 
-  const currentLeagues = searchText !== ''
-    ? leagues.filter((league) => league.name === searchText)
-    : leagues;
+  const currentLeagues = leagues.filter((team) => team.name
+    .toLowerCase()
+    .includes(searchText.toLowerCase()));
 
   const showSkeleton = fetchStatus === 'fetching';
 

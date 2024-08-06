@@ -10,7 +10,7 @@
   @apply flex h-16 items-center justify-between;
 }
 
-.nav-logo {
+.nav-left-container {
   @apply flex items-center;
 }
 
@@ -47,7 +47,7 @@
 }
 
 .nav-mobile-menu-button {
-  @apply relative inline-flex items-center justify-center rounded-md bg-indigo-600 dark:bg-indigo-600 p-2 text-gray-400 dark:text-white hover:bg-indigo-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800;
+  @apply relative inline-flex items-center justify-center rounded-md bg-indigo-600 p-2 text-gray-400 dark:text-white hover:bg-indigo-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800;
 }
 
 .nav-mobile-menu-icon {
