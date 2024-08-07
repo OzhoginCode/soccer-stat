@@ -10,8 +10,31 @@ import { useGetTeams } from '../../tools/queries.js';
 
 import './Teams.css';
 
-const TeamList = ({ currentPage, setCurrentPage, teams }) => {
+const TeamCard = ({ team: { id, name, crestUrl } }) => (
+  <Link to={String(id)} className="group">
+    <div className="team-list-item-img-container">
+      <img
+        alt="Логотип команды"
+        src={crestUrl}
+        className="team-list-item-img"
+      />
+    </div>
+    <h3 className="team-list-item-title">{name}</h3>
+  </Link>
+);
+
+const SkeletonTeamCard = () => (
+  <div className="animate-pulse">
+    <div className="team-list-item-img-container" />
+    <div className="team-list-item-title" />
+  </div>
+);
+
+const TeamList = ({
+  currentPage, setCurrentPage, teams, showSkeleton,
+}) => {
   const itemsPerPage = 10;
+
   const totalItems = teams.length;
 
   const currentData = teams.slice(
@@ -25,18 +48,13 @@ const TeamList = ({ currentPage, setCurrentPage, teams }) => {
         <div className="team-list-content">
           <h2 className="sr-only">Команды</h2>
           <div className="team-list-grid">
-            {currentData.map((team) => (
-              <Link key={team.id} to={String(team.id)} className="group">
-                <div className="team-list-item-img-container">
-                  <img
-                    alt="Логотип команды"
-                    src={team.crestUrl}
-                    className="team-list-item-img"
-                  />
-                </div>
-                <h3 className="team-list-item-title">{team.name}</h3>
-              </Link>
-            ))}
+            {showSkeleton
+              ? Array.from({ length: itemsPerPage }).map((_, index) => (
+                <SkeletonTeamCard key={index} /> // eslint-disable-line react/no-array-index-key
+              ))
+              : currentData.map((team) => (
+                <TeamCard team={team} key={team.id} />
+              ))}
           </div>
         </div>
       </div>
@@ -66,6 +84,8 @@ const Teams = () => {
     .toLowerCase()
     .includes(searchText.toLowerCase()));
 
+  const showSkeleton = fetchStatus === 'fetching';
+
   return (
     <>
       <Search
@@ -78,6 +98,7 @@ const Teams = () => {
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
         teams={currentTeams}
+        showSkeleton={showSkeleton}
       />
 
       <ErrorModal

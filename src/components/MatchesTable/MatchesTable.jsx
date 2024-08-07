@@ -69,7 +69,15 @@ const MatchTr = ({ match }) => (
   </tr>
 );
 
-const MatchesTable = ({ currentPage, setCurrentPage, matches }) => {
+const SkeletonMatchTr = () => (
+  <tr className="match-row h-12 animate-pulse">
+    <td className="match-cell" />
+  </tr>
+);
+
+const MatchesTable = ({
+  currentPage, setCurrentPage, matches, showSkeleton,
+}) => {
   const itemsPerPage = 10;
   const totalItems = matches.length;
 
@@ -84,12 +92,16 @@ const MatchesTable = ({ currentPage, setCurrentPage, matches }) => {
         <div className="matches-table-inner-wrapper">
           <table className="matches-table">
             <tbody>
-              {currentData.map((match) => {
-                const matchData = formatMatchData(match);
-                return (
-                  <MatchTr match={matchData} key={match.id} />
-                );
-              })}
+              {showSkeleton
+                ? Array.from({ length: itemsPerPage }).map((_, index) => (
+                  <SkeletonMatchTr key={index} /> // eslint-disable-line react/no-array-index-key
+                ))
+                : currentData.map((match) => {
+                  const matchData = formatMatchData(match);
+                  return (
+                    <MatchTr match={matchData} key={match.id} />
+                  );
+                })}
             </tbody>
           </table>
         </div>

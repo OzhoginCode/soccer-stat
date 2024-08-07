@@ -1,6 +1,8 @@
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 
 import App from './App';
+
+import ErrorPage from './pages/ErrorPage/ErrorPage.jsx';
 import Leagues from './pages/Leagues/Leagues.jsx';
 import LeagueCalendar from './pages/LeagueCalendar/LeagueCalendar.jsx';
 import Teams from './pages/Teams/Teams.jsx';
@@ -10,6 +12,7 @@ const router = createBrowserRouter([
   {
     path: '/',
     element: <App />,
+    errorElement: <ErrorPage />,
     children: [
       {
         path: '/',
