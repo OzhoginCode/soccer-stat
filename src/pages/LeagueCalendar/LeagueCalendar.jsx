@@ -2,9 +2,9 @@ import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Datepicker from 'react-tailwindcss-datepicker';
 
-import Breadcrumbs from '../../components/Breadcrumbs/Breadcrumbs.jsx';
-import MatchesTable from '../../components/MatchesTable/MatchesTable.jsx';
-import ErrorModal from '../../components/ErrorModal/ErrorModal.jsx';
+import Breadcrumbs from '../../components/Breadcrumbs';
+import MatchesTable from '../../components/MatchesTable';
+import ErrorModal from '../../components/ErrorModal';
 
 import useErrorHandling from '../../hooks/useErrorHandling.js';
 import { useGetCompetitionData } from '../../tools/queries.js';
