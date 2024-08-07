@@ -1,4 +1,4 @@
-import Pagination from '../Pagination/Pagination.jsx';
+import Pagination from '../Pagination';
 
 import './MatchesTable.css';
 

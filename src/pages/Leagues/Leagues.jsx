@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import Pagination from '../../components/Pagination/Pagination.jsx';
-import Search from '../../components/Search/Search.jsx';
-import ErrorModal from '../../components/ErrorModal/ErrorModal.jsx';
+import Pagination from '../../components/Pagination';
+import Search from '../../components/Search';
+import ErrorModal from '../../components/ErrorModal';
 
 import useErrorHandling from '../../hooks/useErrorHandling.js';
 import { useGetCompetitions } from '../../tools/queries.js';

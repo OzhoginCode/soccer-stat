@@ -1,7 +1,7 @@
 import { useRouteError } from 'react-router-dom';
 
-import Navigation from '../../components/Navigation/Navigation.jsx';
-import ErrorModal from '../../components/ErrorModal/ErrorModal.jsx';
+import Navigation from '../../components/Navigation';
+import ErrorModal from '../../components/ErrorModal';
 
 const ErrorPage = () => {
   const error = useRouteError();

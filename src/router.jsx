@@ -2,11 +2,11 @@ import { createBrowserRouter, Navigate } from 'react-router-dom';
 
 import App from './App';
 
-import ErrorPage from './pages/ErrorPage/ErrorPage.jsx';
-import Leagues from './pages/Leagues/Leagues.jsx';
-import LeagueCalendar from './pages/LeagueCalendar/LeagueCalendar.jsx';
-import Teams from './pages/Teams/Teams.jsx';
-import TeamCalendar from './pages/TeamCalendar/TeamCalendar.jsx';
+import ErrorPage from './pages/ErrorPage';
+import Leagues from './pages/Leagues';
+import LeagueCalendar from './pages/LeagueCalendar';
+import Teams from './pages/Teams';
+import TeamCalendar from './pages/TeamCalendar';
 
 const router = createBrowserRouter([
   {

@@ -5,7 +5,8 @@ import {
   Disclosure, DisclosureButton, DisclosurePanel,
 } from '@headlessui/react';
 
-import ThemeToggle from '../ThemeToggle/ThemeToggle.jsx';
+import ThemeToggle from '../ThemeToggle';
+
 import classNames from '../../tools/classNames.js';
 import logo from '../../assets/logo.svg';
 
