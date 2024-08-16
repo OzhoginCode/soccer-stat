@@ -1,7 +1,7 @@
 export default {
   teams: () => '/teams',
-  team: (id) => `/teams/${id}`,
-  teamMatches: (id) => `/teams/${id}/matches`,
+  team: (id: string) => `/teams/${id}`,
+  teamMatches: (id: string) => `/teams/${id}/matches`,
   competitions: () => '/competitions',
-  competitionMatches: (id) => `/competitions/${id}/matches`,
+  competitionMatches: (id: string) => `/competitions/${id}/matches`,
 };

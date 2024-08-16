@@ -1,3 +1,3 @@
-import LeagueCalendar from './LeagueCalendar';
+import LeagueCalendar from './LeagueCalendar.tsx';
 
 export default LeagueCalendar;

@@ -1,3 +1,3 @@
-import TeamCalendar from './TeamCalendar';
+import TeamCalendar from './TeamCalendar.tsx';
 
 export default TeamCalendar;
