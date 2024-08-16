@@ -10,7 +10,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import server from './src/server.js';
 
-import Teams from '../src/pages/Teams/Teams.jsx';
+import Teams from '../src/pages/Teams/Teams.tsx';
 
 beforeAll(() => server.listen());
 afterEach(() => server.resetHandlers());

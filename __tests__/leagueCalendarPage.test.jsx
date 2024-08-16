@@ -10,7 +10,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import server from './src/server.js';
 
-import LeagueCalendar from '../src/pages/LeagueCalendar/LeagueCalendar.jsx';
+import LeagueCalendar from '../src/pages/LeagueCalendar/index.ts';
 
 beforeAll(() => server.listen());
 afterEach(() => server.resetHandlers());
