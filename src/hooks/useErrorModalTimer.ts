@@ -1,7 +1,6 @@
-// useErrorModalTimer.jsx
 import { useState, useEffect } from 'react';
 
-const useErrorModalTimer = (initialTime, isOpen) => {
+const useErrorModalTimer = (initialTime: number, isOpen: boolean) => {
   const [reloadTime, setReloadTime] = useState(initialTime);
 
   useEffect(() => {
