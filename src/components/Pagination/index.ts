@@ -1,3 +1,3 @@
-import Pagination from './Pagination';
+import Pagination from './Pagination.tsx';
 
 export default Pagination;

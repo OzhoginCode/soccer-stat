@@ -1,13 +1,26 @@
+import { FC } from 'react';
+
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/20/solid';
 
 import './Pagination.css';
 
-const PageNumbers = ({ currentPage, totalPages, setCurrentPage }) => {
+interface PageNumbersProps {
+  currentPage: number
+  totalPages: number
+  setCurrentPage: (page: number) => void
+}
+
+const PageNumbers: FC<PageNumbersProps> = ({ currentPage, totalPages, setCurrentPage }) => {
+  enum Separator {
+    dots = '...'
+  }
+  const { dots } = Separator;
+
   // возвращает числа в указанном диапазоне
-  const range = (from, to) => [...Array(to - from + 1).keys()].map((i) => i + from);
+  const range = (from: number, to: number) => [...Array(to - from + 1).keys()].map((i) => i + from);
 
   // возвращает номера страниц доступные для перехода пользователю
-  const generatePageNumbers = () => {
+  const generatePageNumbers = (): (number | Separator)[] => {
     const pages = [];
 
     if (totalPages <= 7) {
@@ -16,22 +29,22 @@ const PageNumbers = ({ currentPage, totalPages, setCurrentPage }) => {
     }
     if (currentPage <= 4) {
       pages.push(...range(1, 5));
-      pages.push('...', totalPages);
+      pages.push(dots, totalPages);
       return pages;
     }
     if (currentPage > 4 && currentPage <= totalPages - 4) {
-      pages.push(1, '...');
+      pages.push(1, dots);
       pages.push(...range(currentPage - 1, currentPage + 1));
-      pages.push('...', totalPages);
+      pages.push(dots, totalPages);
       return pages;
     }
-    pages.push(1, '...');
+    pages.push(1, dots);
     pages.push(...range(totalPages - 4, totalPages));
     return pages;
   };
 
-  const handlePageClick = (page) => {
-    if (page !== '...') {
+  const handlePageClick = (page: number | Separator) => {
+    if (page !== dots) {
       setCurrentPage(page);
     }
   };
@@ -43,7 +56,7 @@ const PageNumbers = ({ currentPage, totalPages, setCurrentPage }) => {
         <button
           key={index} // eslint-disable-line react/no-array-index-key
           type="button"
-          disabled={page === '...'}
+          disabled={page === dots}
           aria-current={page === currentPage ? 'page' : undefined}
           className={page === currentPage ? 'pagination-page-active' : 'pagination-page-inactive'}
           onClick={() => handlePageClick(page)}
@@ -55,7 +68,14 @@ const PageNumbers = ({ currentPage, totalPages, setCurrentPage }) => {
   );
 };
 
-const Pagination = ({
+interface PaginationProps {
+  currentPage: number
+  itemsPerPage: number
+  setCurrentPage: (page: number) => void
+  totalItems: number
+}
+
+const Pagination: FC<PaginationProps> = ({
   currentPage, itemsPerPage, setCurrentPage, totalItems,
 }) => {
   const totalPages = Math.ceil(totalItems / itemsPerPage) || 1;

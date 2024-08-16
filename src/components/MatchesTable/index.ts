@@ -1,3 +1,3 @@
-import MatchesTable from './MatchesTable';
+import MatchesTable from './MatchesTable.tsx';
 
 export default MatchesTable;

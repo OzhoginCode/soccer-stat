@@ -16,14 +16,14 @@ const ThemeToggle = () => {
 
   useEffect(() => {
     window.addEventListener('storage', (event) => {
-      if (event.key === 'theme') {
-        setTheme(event.newValue);
-        setEnabled(event.newValue === 'light');
-      }
-    });
-  }, []);
+      if (event.key !== 'theme') return;
 
-  const handleThemeChange = (isEnabled) => {
+      setTheme(event.newValue || initialTheme);
+      setEnabled(event.newValue === 'light');
+    });
+  }, [initialTheme]);
+
+  const handleThemeChange = (isEnabled: boolean) => {
     const newTheme = isEnabled ? 'light' : 'dark';
     setTheme(newTheme);
     setEnabled(isEnabled);

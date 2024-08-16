@@ -1,25 +1,29 @@
-import Pagination from '../Pagination';
+import { FC } from 'react';
+import Pagination from '../Pagination/index.ts';
 
 import './MatchesTable.css';
 
-const formatMatchData = (match) => {
+import { Match, statusNames, Score } from '../../tools/types.ts';
+
+type FormattedMatchData = {
+  date: string
+  time: string
+  status: string
+  homeTeam: string
+  awayTeam: string
+  fullTimeScore: string | null
+  extraTimeScore: string | null
+  penaltiesScore: string | null
+}
+
+const formatMatchData = (match: Match): FormattedMatchData => {
   const date = new Date(match.utcDate);
-  const optionsDate = { day: '2-digit', month: '2-digit', year: 'numeric' };
+  const optionsDate: Intl.DateTimeFormatOptions = { day: '2-digit', month: '2-digit', year: 'numeric' };
   const formattedDate = date.toLocaleDateString('ru-RU', optionsDate);
 
-  const optionsTime = { hour: '2-digit', minute: '2-digit', hour12: false };
+  const optionsTime: Intl.DateTimeFormatOptions = { hour: '2-digit', minute: '2-digit', hour12: false };
   const formattedTime = date.toLocaleTimeString('ru-RU', optionsTime);
 
-  const statusNames = {
-    SCHEDULED: 'Запланирован',
-    LIVE: 'В прямом эфире',
-    IN_PLAY: 'В игре',
-    PAUSED: 'Пауза',
-    FINISHED: 'Завершен',
-    POSTPONED: 'Отложен',
-    SUSPENDED: 'Приостановлен',
-    CANCELED: 'Отменен',
-  };
   const status = statusNames[match.status];
 
   const homeTeam = match.homeTeam.name;
@@ -27,13 +31,13 @@ const formatMatchData = (match) => {
 
   const { fullTime, extraTime, penalties } = match.score;
 
-  const validateScore = (score) => {
-    const isValid = score?.homeTeam !== null && score?.awayTeam !== null;
+  const validateScore = (score: Score) => {
+    const isValid = score.homeTeam !== null && score.awayTeam !== null;
     return isValid;
   };
 
-  const formatScore = (score) => `${score.homeTeam}:${score.awayTeam}`;
-  const formatExtraScore = (score) => `(${formatScore(score)})`;
+  const formatScore = (score: Score) => `${String(score.homeTeam)}:${String(score.awayTeam)}`;
+  const formatExtraScore = (score: Score) => `(${formatScore(score)})`;
 
   const fullTimeScore = validateScore(fullTime) ? formatScore(fullTime) : null;
   const extraTimeScore = validateScore(extraTime)
@@ -53,9 +57,13 @@ const formatMatchData = (match) => {
   };
 };
 
-const tableData = ['date', 'time', 'status', 'homeTeam', 'awayTeam'];
+const tableData: (keyof FormattedMatchData)[] = ['date', 'time', 'status', 'homeTeam', 'awayTeam'];
 
-const MatchTr = ({ match }) => (
+interface MatchTrProps {
+  match: FormattedMatchData
+}
+
+const MatchTr: FC<MatchTrProps> = ({ match }) => (
   <tr className="match-row">
     {
       tableData.map((tdName) => <td key={tdName} className="match-cell">{match[tdName]}</td>)
@@ -75,7 +83,14 @@ const SkeletonMatchTr = () => (
   </tr>
 );
 
-const MatchesTable = ({
+interface MatchesTableProps {
+  currentPage: number
+  setCurrentPage: (page: number) => void
+  matches: Match[]
+  showSkeleton: boolean
+}
+
+const MatchesTable: FC<MatchesTableProps> = ({
   currentPage, setCurrentPage, matches, showSkeleton,
 }) => {
   const itemsPerPage = 10;

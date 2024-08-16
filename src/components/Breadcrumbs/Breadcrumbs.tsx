@@ -3,14 +3,16 @@ import { ChevronRightIcon } from '@heroicons/react/20/solid';
 
 import './Breadcrumbs.css';
 
-const Breadcrumbs = ({ itemName }) => {
+enum namesTables {
+  teams = 'Команды',
+  leagues = 'Лиги',
+}
+
+const Breadcrumbs = ({ itemName }: { itemName: string }) => {
   const location = useLocation();
   const [tab] = location.pathname.split('/').filter((x) => x);
-  const namesTables = {
-    teams: 'Команды',
-    leagues: 'Лиги',
-  };
-  const tabName = namesTables[tab];
+
+  const tabName = namesTables[tab as keyof typeof namesTables];
 
   return (
     <nav className="breadcrumbs-nav">

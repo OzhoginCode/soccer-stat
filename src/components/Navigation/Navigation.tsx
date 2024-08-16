@@ -1,3 +1,4 @@
+import { FC } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useIsFetching } from '@tanstack/react-query';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
@@ -5,14 +6,25 @@ import {
   Disclosure, DisclosureButton, DisclosurePanel,
 } from '@headlessui/react';
 
-import ThemeToggle from '../ThemeToggle';
+import ThemeToggle from '../ThemeToggle/index.ts';
 
-import classNames from '../../tools/classNames.js';
+import classNames from '../../tools/classNames.ts';
 import logo from '../../assets/logo.svg';
 
 import './Navigation.css';
 
-const NavLinks = ({ navigation, close, pathname }) => (
+type Navigation = {
+  name: string;
+  href: string;
+}[]
+
+interface NavLinksProps {
+  navigation: Navigation
+  close: () => void
+  pathname: string
+}
+
+const NavLinks: FC<NavLinksProps> = ({ navigation, close, pathname }) => (
   <>
     {navigation.map((item) => (
       <Link

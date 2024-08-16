@@ -1,13 +1,14 @@
+import { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Button, Dialog, DialogPanel, DialogTitle,
 } from '@headlessui/react';
 
-import useErrorModalTimer from '../../hooks/useErrorModalTimer.jsx';
+import useErrorModalTimer from '../../hooks/useErrorModalTimer.ts';
 
 import './ErrorModal.css';
 
-const getErrorText = (errorType, reloadTime) => {
+const getErrorText = (errorType: number, reloadTime: number) => {
   switch (errorType) {
     case 403:
       return {
@@ -29,7 +30,7 @@ const getErrorText = (errorType, reloadTime) => {
         header: 'Слишком много запросов',
         body: `Так как мы используем открытый API, к сожалению,
           количество запросов в минуту ограничено.
-          Не уходите, через ${reloadTime} секунд лимит обновится,
+          Не уходите, через ${String(reloadTime)} секунд лимит обновится,
           и всё заработает!`,
         button: 'Перезагрузить сейчас',
       };
@@ -43,7 +44,12 @@ const getErrorText = (errorType, reloadTime) => {
   }
 };
 
-const getButtonHandler = (errorType, handlers) => {
+type Handlers = {
+  navigateToRoot: () => void;
+  reload: () => void;
+};
+
+const getButtonHandler = (errorType: number, handlers: Handlers) => {
   const { navigateToRoot, reload } = handlers;
   switch (errorType) {
     case 403:
@@ -57,7 +63,15 @@ const getButtonHandler = (errorType, handlers) => {
   }
 };
 
-const ErrorModal = ({
+interface ErrorModalProps {
+  isOpen: boolean
+  setIsOpen: (value: boolean) => void
+  initialReloadTime: number
+  reload: () => void
+  errorType: number
+}
+
+const ErrorModal: FC<ErrorModalProps> = ({
   isOpen, setIsOpen, initialReloadTime, reload, errorType,
 }) => {
   const reloadTime = useErrorModalTimer(initialReloadTime, isOpen);
@@ -67,7 +81,7 @@ const ErrorModal = ({
 
   const errorText = getErrorText(errorType, reloadTime);
 
-  const handlers = { navigateToRoot, reload };
+  const handlers: Handlers = { navigateToRoot, reload };
   const buttonHandler = getButtonHandler(errorType, handlers);
 
   const close = () => setIsOpen(false);
