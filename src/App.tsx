@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router-dom';
 
-import Navigation from './components/Navigation';
+import Navigation from './components/Navigation/index.ts';
 
 const App = () => (
   <div className="min-h-full">

@@ -1,12 +1,12 @@
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 
-import App from './App';
+import App from './App.tsx';
 
-import ErrorPage from './pages/ErrorPage';
-import Leagues from './pages/Leagues';
-import LeagueCalendar from './pages/LeagueCalendar';
-import Teams from './pages/Teams';
-import TeamCalendar from './pages/TeamCalendar';
+import ErrorPage from './pages/ErrorPage/index.ts';
+import Leagues from './pages/Leagues/index.ts';
+import LeagueCalendar from './pages/LeagueCalendar/index.ts';
+import Teams from './pages/Teams/index.ts';
+import TeamCalendar from './pages/TeamCalendar/index.ts';
 
 const router = createBrowserRouter([
   {
