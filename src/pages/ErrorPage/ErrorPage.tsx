@@ -1,10 +1,10 @@
 import { useRouteError } from 'react-router-dom';
 
-import Navigation from '../../components/Navigation';
-import ErrorModal from '../../components/ErrorModal';
+import Navigation from '../../components/Navigation/index.ts';
+import ErrorModal from '../../components/ErrorModal/index.ts';
 
 const ErrorPage = () => {
-  const error = useRouteError();
+  const error = useRouteError() as { status: number };
 
   return (
     <div className="min-h-full">

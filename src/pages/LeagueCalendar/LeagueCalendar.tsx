@@ -1,27 +1,28 @@
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import Datepicker from 'react-tailwindcss-datepicker';
+import Datepicker, { DateValueType } from 'react-tailwindcss-datepicker';
 
-import Breadcrumbs from '../../components/Breadcrumbs';
-import MatchesTable from '../../components/MatchesTable';
-import ErrorModal from '../../components/ErrorModal';
+import Breadcrumbs from '../../components/Breadcrumbs/index.ts';
+import MatchesTable from '../../components/MatchesTable/index.ts';
+import ErrorModal from '../../components/ErrorModal/index.ts';
 
-import useErrorHandling from '../../hooks/useErrorHandling.js';
-import { useGetCompetitionData } from '../../tools/queries.js';
+import useErrorHandling from '../../hooks/useErrorHandling.ts';
+import { useGetCompetitionData } from '../../tools/queries.ts';
 
 import './LeagueCalendar.css';
 
 const LeagueCalendar = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [dateRange, setDateRange] = useState({
+  const [dateRange, setDateRange] = useState<DateValueType>({
     startDate: null,
     endDate: null,
   });
 
   const { id } = useParams();
+
   const {
     error, data, fetchStatus, queryKey,
-  } = useGetCompetitionData(id, dateRange);
+  } = useGetCompetitionData(id!, dateRange);
 
   const {
     modalOpen, setModalOpen, reloadTime, reload, errorType,

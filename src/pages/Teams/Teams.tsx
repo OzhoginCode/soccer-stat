@@ -1,16 +1,24 @@
-import { useState } from 'react';
+import { useState, FC } from 'react';
 import { Link } from 'react-router-dom';
 
-import Pagination from '../../components/Pagination';
-import Search from '../../components/Search';
-import ErrorModal from '../../components/ErrorModal';
+import Pagination from '../../components/Pagination/index.ts';
+import Search from '../../components/Search/index.ts';
+import ErrorModal from '../../components/ErrorModal/index.ts';
 
-import useErrorHandling from '../../hooks/useErrorHandling.js';
-import { useGetTeams } from '../../tools/queries.js';
+import useErrorHandling from '../../hooks/useErrorHandling.ts';
+import { useGetTeams } from '../../tools/queries.ts';
 
 import './Teams.css';
 
-const TeamCard = ({ team: { id, name, crestUrl } }) => (
+interface TeamCardProps {
+  team: {
+    id: string
+    name: string
+    crestUrl: string
+  }
+}
+
+const TeamCard: FC<TeamCardProps> = ({ team: { id, name, crestUrl } }) => (
   <Link to={String(id)} className="group">
     <div className="team-list-item-img-container">
       <img
@@ -30,7 +38,18 @@ const SkeletonTeamCard = () => (
   </div>
 );
 
-const TeamList = ({
+interface TeamListProps {
+  currentPage: number
+  setCurrentPage: (page: number) => void
+  teams: {
+    id: string
+    name: string
+    crestUrl: string
+   }[]
+  showSkeleton: boolean
+}
+
+const TeamList: FC<TeamListProps> = ({
   currentPage, setCurrentPage, teams, showSkeleton,
 }) => {
   const itemsPerPage = 10;

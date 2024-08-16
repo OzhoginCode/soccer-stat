@@ -1,33 +1,41 @@
 import { useQuery, useQueries } from '@tanstack/react-query';
 
-import client from './apiClient';
-import paths from './paths.js';
+import client from './apiClient.ts';
+import paths from './paths.ts';
+
+import {
+  TeamsResp, TeamNameResp, TeamMatchesResp,
+  CompetitionsResp, CompetitionDataResp, DataParams,
+  CompetitionDataQueryKey, TeamNameQueryKey, TeamMatchesQueryKey,
+} from './types.ts';
 
 const getTeams = async () => {
-  const { data } = await client.get(paths.teams());
+  const { data } = await client.get<TeamsResp>(paths.teams());
   return data.teams;
 };
 
-const getTeamName = async ({ queryKey }) => {
+const getTeamName = async ({ queryKey }: { queryKey: TeamNameQueryKey }) => {
   const [, , id] = queryKey;
-  const { data } = await client.get(paths.team(id));
+  const { data } = await client.get<TeamNameResp>(paths.team(id));
   return data.name;
 };
 
-const getTeamMatches = async ({ queryKey }) => {
+const getTeamMatches = async ({ queryKey }: { queryKey: TeamMatchesQueryKey}) => {
   const [, , id, dateFrom, dateTo] = queryKey;
-  const { data } = await client.get(paths.teamMatches(id), { params: { dateFrom, dateTo } });
+  const params = { dateFrom, dateTo };
+  const { data } = await client.get<TeamMatchesResp>(paths.teamMatches(id), { params });
   return data.matches;
 };
 
 const getCompetitions = async () => {
-  const { data } = await client.get(paths.competitions());
+  const { data } = await client.get<CompetitionsResp>(paths.competitions());
   return data.competitions;
 };
 
-const getCompetitionData = async ({ queryKey }) => {
+const getCompetitionData = async ({ queryKey }: { queryKey: CompetitionDataQueryKey }) => {
   const [, id, dateFrom, dateTo] = queryKey;
-  const { data } = await client.get(paths.competitionMatches(id), { params: { dateFrom, dateTo } });
+  const params = { dateFrom, dateTo };
+  const { data } = await client.get<CompetitionDataResp>(paths.competitionMatches(id), { params });
   return data;
 };
 
@@ -43,8 +51,11 @@ export const useGetTeams = () => {
   return { ...queryResult, queryKey };
 };
 
-export const useGetTeamData = (id, { startDate, endDate }) => {
+export const useGetTeamData = (id: string, dataParams: DataParams) => {
+  const { startDate = null, endDate = null } = dataParams || {};
+
   const teamDataKey = 'teamData';
+
   const queries = useQueries({
     queries: [
       {
@@ -83,8 +94,10 @@ export const useGetCompetitions = () => {
   return { ...queryResult, queryKey };
 };
 
-export const useGetCompetitionData = (id, { startDate, endDate }) => {
-  const queryKey = ['competitionData', id, startDate, endDate];
+export const useGetCompetitionData = (id: string, dataParams: DataParams) => {
+  const { startDate = null, endDate = null } = dataParams || {};
+
+  const queryKey: CompetitionDataQueryKey = ['competitionData', id, startDate, endDate];
 
   const queryResult = useQuery({
     queryKey,

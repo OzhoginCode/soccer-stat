@@ -1,6 +1,8 @@
+/// <reference types="vite/client" />
 import axios from 'axios';
 
-const apiKey = import.meta.env.VITE_API_KEY;
+// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+const apiKey: string = import.meta.env.VITE_API_KEY;
 const baseURL = import.meta.env.PROD ? 'https://api.football-data.org/v2' : '/api';
 
 const client = axios.create({

@@ -1,19 +1,19 @@
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import Datepicker from 'react-tailwindcss-datepicker';
+import Datepicker, { DateValueType } from 'react-tailwindcss-datepicker';
 
-import Breadcrumbs from '../../components/Breadcrumbs';
-import MatchesTable from '../../components/MatchesTable';
-import ErrorModal from '../../components/ErrorModal';
+import Breadcrumbs from '../../components/Breadcrumbs/index.ts';
+import MatchesTable from '../../components/MatchesTable/index.ts';
+import ErrorModal from '../../components/ErrorModal/index.ts';
 
-import useErrorHandling from '../../hooks/useErrorHandling.js';
-import { useGetTeamData } from '../../tools/queries.js';
+import useErrorHandling from '../../hooks/useErrorHandling.ts';
+import { useGetTeamData } from '../../tools/queries.ts';
 
 import './TeamCalendar.css';
 
 const TeamCalendar = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [dateRange, setDateRange] = useState({
+  const [dateRange, setDateRange] = useState<DateValueType>({
     startDate: null,
     endDate: null,
   });
@@ -22,7 +22,7 @@ const TeamCalendar = () => {
 
   const {
     error, data: { teamName, matches }, fetchStatus, queryKey,
-  } = useGetTeamData(id, dateRange);
+  } = useGetTeamData(id!, dateRange);
 
   const {
     modalOpen, setModalOpen, reloadTime, reload, errorType,

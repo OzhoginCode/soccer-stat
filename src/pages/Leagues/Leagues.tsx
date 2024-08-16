@@ -1,17 +1,19 @@
-import { useState } from 'react';
+import { useState, FC } from 'react';
 import { Link } from 'react-router-dom';
 
-import Pagination from '../../components/Pagination';
-import Search from '../../components/Search';
-import ErrorModal from '../../components/ErrorModal';
+import Pagination from '../../components/Pagination/index.ts';
+import Search from '../../components/Search/index.ts';
+import ErrorModal from '../../components/ErrorModal/index.ts';
 
-import useErrorHandling from '../../hooks/useErrorHandling.js';
-import { useGetCompetitions } from '../../tools/queries.js';
+import useErrorHandling from '../../hooks/useErrorHandling.ts';
+import { useGetCompetitions } from '../../tools/queries.ts';
+
+import { Competition } from '../../tools/types.ts';
 
 import './Leagues.css';
 
-const LeagueCard = ({ league }) => (
-  <Link to={`${league.id}`} className="league-list-item group">
+const LeagueCard = ({ league }: { league: Competition }) => (
+  <Link to={String(league.id)} className="league-list-item group">
     <h3 className="league-list-item-title">{league.name}</h3>
     <div className="league-list-item-area">{league.area.name}</div>
   </Link>
@@ -24,7 +26,14 @@ const SkeletonLeagueCard = () => (
   </div>
 );
 
-const LeagueList = ({
+interface LeagueListProps {
+  currentPage: number
+  setCurrentPage: (n: number) => void
+  leagues: Competition[]
+  showSkeleton: boolean
+}
+
+const LeagueList: FC<LeagueListProps> = ({
   currentPage, setCurrentPage, leagues, showSkeleton,
 }) => {
   const itemsPerPage = 10;
