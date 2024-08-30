@@ -10,7 +10,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import server from './src/server.js';
 
-import TeamCalendar from '../src/pages/TeamCalendar/TeamCalendar.jsx';
+import TeamCalendar from '../src/pages/TeamCalendar/index.ts';
 
 beforeAll(() => server.listen());
 afterEach(() => server.resetHandlers());

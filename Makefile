@@ -11,7 +11,10 @@ lint:
 install:
 	npm ci
 
-test:
+type-check:
+	npx tsc -b
+
+test: type-check
 	npx vitest --run
 
 test-watch:
