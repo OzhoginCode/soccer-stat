@@ -14,16 +14,16 @@ interface TeamCardProps {
   team: {
     id: string
     name: string
-    crestUrl: string
+    crest: string
   }
 }
 
-const TeamCard: FC<TeamCardProps> = ({ team: { id, name, crestUrl } }) => (
+const TeamCard: FC<TeamCardProps> = ({ team: { id, name, crest } }) => (
   <Link to={String(id)} className="group">
     <div className="team-list-item-img-container">
       <img
         alt="Логотип команды"
-        src={crestUrl}
+        src={crest}
         className="team-list-item-img"
       />
     </div>
@@ -44,7 +44,7 @@ interface TeamListProps {
   teams: {
     id: string
     name: string
-    crestUrl: string
+    crest: string
    }[]
   showSkeleton: boolean
 }

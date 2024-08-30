@@ -12,8 +12,6 @@ type FormattedMatchData = {
   homeTeam: string
   awayTeam: string
   fullTimeScore: string | null
-  extraTimeScore: string | null
-  penaltiesScore: string | null
 }
 
 const formatMatchData = (match: Match): FormattedMatchData => {
@@ -29,21 +27,16 @@ const formatMatchData = (match: Match): FormattedMatchData => {
   const homeTeam = match.homeTeam.name;
   const awayTeam = match.awayTeam.name;
 
-  const { fullTime, extraTime, penalties } = match.score;
+  const { fullTime } = match.score;
 
   const validateScore = (score: Score) => {
-    const isValid = score.homeTeam !== null && score.awayTeam !== null;
+    const isValid = score.home !== null && score.away !== null;
     return isValid;
   };
 
-  const formatScore = (score: Score) => `${String(score.homeTeam)}:${String(score.awayTeam)}`;
-  const formatExtraScore = (score: Score) => `(${formatScore(score)})`;
+  const formatScore = (score: Score) => `${String(score.home)}:${String(score.away)}`;
 
   const fullTimeScore = validateScore(fullTime) ? formatScore(fullTime) : null;
-  const extraTimeScore = validateScore(extraTime)
-    ? formatExtraScore(extraTime) : null;
-  const penaltiesScore = validateScore(penalties)
-    ? formatExtraScore(penalties) : null;
 
   return {
     date: formattedDate,
@@ -52,8 +45,6 @@ const formatMatchData = (match: Match): FormattedMatchData => {
     homeTeam,
     awayTeam,
     fullTimeScore,
-    extraTimeScore,
-    penaltiesScore,
   };
 };
 
@@ -70,9 +61,6 @@ const MatchTr: FC<MatchTrProps> = ({ match }) => (
     }
     <td className="match-cell">
       {match.fullTimeScore}
-      <span className="match-extra-scores">
-        {match.extraTimeScore} {match.penaltiesScore}
-      </span>
     </td>
   </tr>
 );

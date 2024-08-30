@@ -4,7 +4,7 @@ import { setupServer } from 'msw/node';
 const teams = Array.from({ length: 20 }, (_, i) => ({
   name: `команда ${i + 1}`,
   id: i + 1,
-  crestUrl: `/some-img-${i + 1}`,
+  crest: `/some-img-${i + 1}`,
 }));
 
 const competitions = Array.from({ length: 20 }, (_, i) => ({
@@ -22,9 +22,7 @@ const matches = Array.from({ length: 20 }, (_, i) => ({
   homeTeam: { name: `Home Team ${i + 1}` },
   awayTeam: { name: `Away Team ${i + 1}` },
   score: {
-    fullTime: { homeTeam: i % 2 === 0 ? 1 : 2, awayTeam: i % 2 === 0 ? 2 : 1 },
-    extraTime: { homeTeam: i === 1 ? 1 : null, awayTeam: i === 1 ? 1 : null },
-    penalties: { homeTeam: i === 1 ? 2 : null, awayTeam: i === 1 ? 2 : null },
+    fullTime: { home: i % 2 === 0 ? 1 : 2, away: i % 2 === 0 ? 2 : 1 },
   },
 }));
 
