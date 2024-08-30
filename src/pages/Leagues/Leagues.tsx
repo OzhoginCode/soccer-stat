@@ -6,9 +6,9 @@ import Search from '../../components/Search/index.ts';
 import ErrorModal from '../../components/ErrorModal/index.ts';
 
 import useErrorHandling from '../../hooks/useErrorHandling.ts';
-import { useGetCompetitions } from '../../tools/queries.ts';
+import { useGetCompetitions } from '../../services/queries.ts';
 
-import { Competition } from '../../tools/types.ts';
+import { Competition } from '../../services/types.ts';
 
 import './Leagues.css';
 

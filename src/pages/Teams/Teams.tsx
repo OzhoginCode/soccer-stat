@@ -6,7 +6,7 @@ import Search from '../../components/Search/index.ts';
 import ErrorModal from '../../components/ErrorModal/index.ts';
 
 import useErrorHandling from '../../hooks/useErrorHandling.ts';
-import { useGetTeams } from '../../tools/queries.ts';
+import { useGetTeams } from '../../services/queries.ts';
 
 import './Teams.css';
 

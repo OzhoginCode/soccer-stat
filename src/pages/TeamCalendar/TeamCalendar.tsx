@@ -7,7 +7,7 @@ import MatchesTable from '../../components/MatchesTable/index.ts';
 import ErrorModal from '../../components/ErrorModal/index.ts';
 
 import useErrorHandling from '../../hooks/useErrorHandling.ts';
-import { useGetTeamData } from '../../tools/queries.ts';
+import { useGetTeamData } from '../../services/queries.ts';
 
 import './TeamCalendar.css';
 

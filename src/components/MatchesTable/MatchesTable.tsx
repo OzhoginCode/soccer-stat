@@ -3,7 +3,7 @@ import Pagination from '../Pagination/index.ts';
 
 import './MatchesTable.css';
 
-import { Match, statusNames, Score } from '../../tools/types.ts';
+import { Match, statusNames, Score } from '../../services/types.ts';
 
 type FormattedMatchData = {
   date: string
