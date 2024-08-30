@@ -102,7 +102,7 @@ const Pagination: FC<PaginationProps> = ({
           disabled={currentPage === 1}
           className="pagination-button"
         >
-          Previous
+          Назад
         </button>
 
         <button
@@ -111,7 +111,7 @@ const Pagination: FC<PaginationProps> = ({
           disabled={currentPage === totalPages}
           className="pagination-button"
         >
-          Next
+          Вперёд
         </button>
       </div>
 

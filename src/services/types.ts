@@ -3,7 +3,7 @@ import { DateType, DateValueType } from 'react-tailwindcss-datepicker';
 export type Team = {
   id: string;
   name: string;
-  crestUrl: string;
+  crest: string;
 }
 
 export type TeamsResp = {
@@ -16,6 +16,7 @@ export type TeamNameResp = {
 
 export enum statusNames {
   SCHEDULED = 'Запланирован',
+  TIMED = 'Назначен',
   LIVE = 'В прямом эфире',
   IN_PLAY = 'В игре',
   PAUSED = 'Пауза',
@@ -26,8 +27,8 @@ export enum statusNames {
 }
 
 export type Score = {
-  homeTeam: number | null;
-  awayTeam: number | null;
+  home: number | null;
+  away: number | null;
 };
 
 export type Match = {
@@ -38,8 +39,6 @@ export type Match = {
   awayTeam: { name: string };
   score: {
     fullTime: Score;
-    extraTime: Score;
-    penalties: Score;
   };
 }
 

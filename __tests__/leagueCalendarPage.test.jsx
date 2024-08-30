@@ -40,7 +40,6 @@ test('teams table render', async () => {
   await within(team2El).findByText(/запланирован/i);
   await within(team2El).findByText('Away Team 2');
   await within(team2El).findByText('2:1');
-  await within(team2El).findByText('(1:1) (2:2)');
 });
 
 test('date filtering', async () => {

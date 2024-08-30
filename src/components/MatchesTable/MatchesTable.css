@@ -21,7 +21,3 @@
 .match-cell {
   @apply whitespace-nowrap px-6 py-4;
 }
-
-.match-extra-scores {
-  @apply text-gray-400;
-}
